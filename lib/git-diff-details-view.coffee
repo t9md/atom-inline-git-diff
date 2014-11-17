@@ -45,6 +45,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   toggleShowDiffDetails: ->
     @showDiffDetails = !@showDiffDetails
+    @diffDetailsDataManager.invalidatePreviousSelectedHunk()
     @updateCurrentRow()
     @updateDiffDetailsDisplay()
 
@@ -75,7 +76,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     console.log "copy"
 
   undo: (e) ->
-    selectedHunk = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+    {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
     if buffer = @editor.getBuffer()
       if selectedHunk.kind is "m"
@@ -89,13 +90,18 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   updateDiffDetailsDisplay: ->
     if @showDiffDetails
-      selectedHunk = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+      {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+
+      console.log isDifferent
 
       if selectedHunk?
+        return unless isDifferent
         @attach()
         @setPosition(selectedHunk.end)
         @populate(selectedHunk)
         return
+
+      @previousSelectedHunk = selectedHunk
 
     @detach()
     return

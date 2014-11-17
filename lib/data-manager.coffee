@@ -6,18 +6,26 @@ module.exports = class DiffDetailsDataManager
   liesBetween: (hunk, row) ->
     hunk.start <= row <= hunk.end
 
+  isDifferentHunk: ->
+    if @previousSelectedHunk? and @previousSelectedHunk.start? and @selectedHunk? and @selectedHunk.start?
+      return @selectedHunk.start != @previousSelectedHunk.start
+    return true
+
   getSelectedHunk: (currentRow) ->
     if !@selectedHunk? or @selectedHunkInvalidated or !@liesBetween(@selectedHunk, currentRow)
       @updateLineDiffDetails()
       @updateSelectedHunk(currentRow)
 
     @selectedHunkInvalidated = false
-    @selectedHunk
+
+    isDifferent = @isDifferentHunk()
+
+    @previousSelectedHunk = @selectedHunk
+
+    {selectedHunk: @selectedHunk, isDifferent}
 
   updateSelectedHunk: (currentRow) ->
     @selectedHunk = null
-
-    # lineDiffDetails = @getLineDiffDetails()
 
     if @lineDiffDetails?
       for hunk in @lineDiffDetails
@@ -77,3 +85,7 @@ module.exports = class DiffDetailsDataManager
   invalidate: (@repo, @path, @text) ->
     @selectedHunkInvalidated = true
     @lineDiffDetailsInvalidated = true
+    @invalidatePreviousSelectedHunk()
+
+  invalidatePreviousSelectedHunk: ->
+    @previousSelectedHunk = null
