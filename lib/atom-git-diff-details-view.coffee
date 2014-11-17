@@ -1,7 +1,9 @@
-{Subscriber} = require 'emissary'
+{View} = require 'atom'
+DiffDetailsDataManager = require './diff-details-data-manager'
+Highlights = require 'highlights'
 
 module.exports =
-class AtomGitDiffDetailsView
+class AtomGitDiffDetailsView extends View
 
   @content: ->
     @div class: "diff-details-outer", =>
