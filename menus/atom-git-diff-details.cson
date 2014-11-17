@@ -1,0 +1,22 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle atom-git-diff-details'
+      'command': 'atom-git-diff-details:toggle'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'atom-git-diff-details'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'atom-git-diff-details:toggle'
+        }
+      ]
+    ]
+  }
+]
