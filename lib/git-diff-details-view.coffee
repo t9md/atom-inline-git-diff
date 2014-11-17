@@ -7,10 +7,10 @@ module.exports = class AtomGitDiffDetailsView extends View
   Housekeeping.includeInto(this)
 
   @content: ->
-    @div class: "diff-details-outer", =>
-      @div class: "diff-details-main-panel", outlet: "mainPanel", =>
-        @div class: "diff-details-main-panel-contents", outlet: "contents"
-      @div class: "diff-details-button-panel", outlet: "buttonPanel", =>
+    @div class: "atom-diff-details-outer", =>
+      @div class: "atom-diff-details-main-panel", outlet: "mainPanel", =>
+        @div class: "atom-diff-details-main-panel-contents", outlet: "contents"
+      @div class: "atom-diff-details-button-panel", outlet: "buttonPanel", =>
         @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
         @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
 
