@@ -1,31 +1,47 @@
+{Subscriber} = require 'emissary'
+
 module.exports =
 class AtomGitDiffDetailsView
-  constructor: (serializeState) ->
-    # Create root element
-    @element = document.createElement('div')
-    @element.classList.add('atom-git-diff-details',  'overlay', 'from-top')
+  constructor: (@editorView) ->
+    {@editor} = @editorView
 
-    # Create message element
-    message = document.createElement('div')
-    message.textContent = "The AtomGitDiffDetails package is Alive! It's ALIVE!"
-    message.classList.add('message')
-    @element.appendChild(message)
+    @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
 
-    # Register command that toggles this view
-    atom.commands.add 'atom-workspace', 'atom-git-diff-details:toggle': => @toggle()
+    @subscribe atom.project.getRepo(), 'statuses-changed', =>
+      @scheduleUpdate()
 
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
+    @subscribe atom.project.getRepo(), 'status-changed', (path) =>
+      @scheduleUpdate() if path is @editor.getPath()
 
-  # Tear down any state and detach
-  destroy: ->
-    @element.remove()
+    @subscribeToBuffer()
 
-  # Toggle the visibility of this view
-  toggle: ->
-    console.log 'AtomGitDiffDetailsView was toggled!'
+    @subscribe @editorView, 'editor:will-be-removed', =>
+      @cancelUpdate()
+      @unsubscribe()
+      @unsubscribeFromBuffer()
 
-    if @element.parentElement?
-      @element.remove()
-    else
-      atom.workspaceView.append(@element)
+  subscribeToBuffer: =>
+    @unsubscribeFromBuffer()
+
+    if @buffer = @editor.getBuffer()
+      @scheduleUpdate()
+      @buffer.on 'contents-modified', @notifyContentsModified
+
+  unsubscribeFromBuffer: ->
+    if @buffer?
+      @removeDecorations()
+      @buffer.off 'contents-modified', @notifyContentsModified
+      @buffer = null
+
+  scheduleUpdate: ->
+    @cancelUpdate()
+    @immediateId = setImmediate(@notifyContentsModified)
+
+  cancelUpdate: ->
+    clearImmediate(@immediateId)
+
+  notifyContentsModified: =>
+    return if @editor.isDestroyed()
+    @diffDetailsView.notifyContentsModified()
+
+  removeDecorations: ->
