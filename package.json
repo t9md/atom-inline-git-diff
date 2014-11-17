@@ -1,16 +1,15 @@
 {
   "name": "atom-git-diff-details",
-  "main": "./lib/atom-git-diff-details",
+  "main": "./lib/main",
   "version": "0.0.0",
   "description": "A short description of your package",
-  "activationCommands": {
-    "atom-workspace": "atom-git-diff-details:toggle"
-  },
   "repository": "https://github.com/atom/atom-git-diff-details",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "highlights": "0.14.0",
+    "mixto": "1.x"
   }
 }

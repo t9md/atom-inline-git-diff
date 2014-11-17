@@ -1,9 +1,10 @@
 {View} = require 'atom'
-DiffDetailsDataManager = require './diff-details-data-manager'
 Highlights = require 'highlights'
+DiffDetailsDataManager = require './data-manager'
+Housekeeping = require './housekeeping'
 
-module.exports =
-class AtomGitDiffDetailsView extends View
+module.exports = class AtomGitDiffDetailsView extends View
+  Housekeeping.includeInto(this)
 
   @content: ->
     @div class: "diff-details-outer", =>
@@ -13,34 +14,11 @@ class AtomGitDiffDetailsView extends View
         @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
         @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
 
-  constructor: (@editorView) ->
+  initialize: (@editorView) ->
     {@editor} = @editorView
 
-    @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
-
-    @subscribe atom.project.getRepo(), 'statuses-changed', =>
-      @scheduleUpdate()
-
-    @subscribe atom.project.getRepo(), 'status-changed', (path) =>
-      @scheduleUpdate() if path is @editor.getPath()
-
-    @subscribeToCommand @editorView, 'git-diff:toggle-diff-details', =>
-      @toggleShowDiffDetails()
-
-    @subscribe @editorView, 'editor:will-be-removed', =>
-      @cancelUpdate()
-      @unsubscribe()
-      @unsubscribeFromBuffer()
-
-    @subscribeToBuffer()
-    @subscribeToCursor()
-
-    # Prevent focusout event
-    @buttonPanel.on 'mousedown', () ->
-      false
-
-    @mainPanel.on 'mousedown', () ->
-      false
+    @initializeHousekeeping()
+    @preventFocusOut()
 
     @highlighter = new Highlights()
     @diffDetailsDataManager = new DiffDetailsDataManager()
@@ -50,36 +28,14 @@ class AtomGitDiffDetailsView extends View
 
     @updateCurrentRow()
 
-  subscribeToBuffer: =>
-    @unsubscribeFromBuffer()
+  preventFocusOut: ->
+    @buttonPanel.on 'mousedown', () ->
+      false
 
-    if @buffer = @editor.getBuffer()
-      @scheduleUpdate()
-      @buffer.on 'contents-modified', @notifyContentsModified
+    @mainPanel.on 'mousedown', () ->
+      false
 
-  unsubscribeFromBuffer: ->
-    if @buffer?
-      @removeDecorations()
-      @buffer.off 'contents-modified', @notifyContentsModified
-      @buffer = null
-
-  subscribeToCursor: ->
-    @cursorSubscription?.dispose()
-    @cursorSubscription = @getActiveTextEditor()?.onDidChangeCursorPosition =>
-      @notifyChangeCursorPosition()
-
-  unsubscribeFromCursor: ->
-    @cursorSubscription?.dispose()
-    @cursorSubscription = null
-
-  scheduleUpdate: ->
-    @cancelUpdate()
-    @immediateId = setImmediate(@notifyContentsModified)
-
-  cancelUpdate: ->
-    clearImmediate(@immediateId)
-
-  notifyContentsModified: ->
+  notifyContentsModified: =>
     return if @editor.isDestroyed()
     @diffDetailsDataManager.invalidate(atom.project.getRepo(),
                                        @buffer.getPath(),
