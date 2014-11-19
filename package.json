@@ -1,12 +1,12 @@
 {
-  "name": "atom-git-diff-details",
+  "name": "git-diff-details",
   "main": "./lib/main",
   "version": "0.0.0",
-  "description": "A short description of your package",
-  "repository": "https://github.com/atom/atom-git-diff-details",
+  "description": "View git diffs directly in atom",
+  "repository": "https://github.com/samu/git-diff-details",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">0.150.0"
   },
   "dependencies": {
     "highlights": "0.14.0",
