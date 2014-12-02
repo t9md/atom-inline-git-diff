@@ -65,8 +65,8 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
+      filePath: @buffer.getBaseName()
       fileContents: selectedHunk.oldString
-      scopeName: 'source.coffee'
 
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
     @contents.html(html)
