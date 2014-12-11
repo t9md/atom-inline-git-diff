@@ -6,7 +6,7 @@
   "repository": "https://github.com/samu/git-diff-details",
   "license": "MIT",
   "engines": {
-    "atom": ">0.150.0"
+    "atom": ">0.200.0"
   },
   "dependencies": {
     "highlights": "0.14.0",
