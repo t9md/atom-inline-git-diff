@@ -1,2 +1,2 @@
 '.editor':
-  'alt-g alt-d': 'git-diff:toggle-diff-details'
+  'alt-g alt-d': 'git-diff-details:toggle-diff-details'
