@@ -54,13 +54,11 @@ module.exports = class DiffDetailsDataManager
     hunk = null
 
     for {oldStart, newStart, oldLines, newLines, oldLineNumber, newLineNumber, line} in rawLineDiffDetails
-      console.log "processing hunk"
+      # process modifications and deletions only
       unless oldLines is 0 and newLines > 0
-        # process modifications and deletions only
+        # create a new hunk entry if the hunk start of the previous line
+        # is different to the current
         if not hunk? or (newStart != hunk.start)
-          # create a new hunk entry if the hunk start of the previous line
-          # is different to the current
-
           newEnd = null
           kind = null
           if newLines is 0 and oldLines > 0
