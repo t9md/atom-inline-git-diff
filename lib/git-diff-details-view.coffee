@@ -73,7 +73,8 @@ module.exports = class AtomGitDiffDetailsView extends View
     @contents.css(height: selectedHunk.oldLines.length * @editorView.lineHeight)
 
   copy: (e) ->
-    console.log "copy"
+    {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+    atom.clipboard.write(selectedHunk.oldString)
 
   undo: (e) ->
     {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
