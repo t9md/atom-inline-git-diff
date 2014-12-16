@@ -43,14 +43,17 @@ module.exports = class DiffDetailsDataManager
   prepareLineDiffDetails: (repo, path, text) ->
     @lineDiffDetails = null
 
-    rawLineDiffDetails = repo.getLineDiffDetails(path, text)
+    repo = repo.getRepo(path)
+    repo.getLineDiffDetails(repo.relativize(path), text)
+
+    rawLineDiffDetails = repo.getLineDiffDetails(repo.relativize(path), text)
 
     return unless rawLineDiffDetails?
 
     @lineDiffDetails = []
     hunk = null
 
-    for {oldStart, newStart, oldLines, newLines, oldLineNo, newLineNo, line} in rawLineDiffDetails
+    for {oldStart, newStart, oldLines, newLines, oldLineNumber, newLineNumber, line} in rawLineDiffDetails
       console.log "processing hunk"
       unless oldLines is 0 and newLines > 0
         # process modifications and deletions only
@@ -75,7 +78,7 @@ module.exports = class DiffDetailsDataManager
           }
           @lineDiffDetails.push(hunk)
 
-        if newLineNo >= 0
+        if newLineNumber >= 0
           hunk.newLines.push(line)
           hunk.newString += line
         else
