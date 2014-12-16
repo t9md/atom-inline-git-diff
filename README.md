@@ -1,4 +1,4 @@
-# atom-git-diff-details package
+# Git Diff Details package
 
 View git diffs directly in atom.
 
