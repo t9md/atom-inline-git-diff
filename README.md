@@ -9,7 +9,7 @@ Use `alt-g alt-d` to toggle the diff or configure it to your liking:
   'cmd-g cmd-d': 'git-diff-details:toggle-diff-details'
 ```
 
-![git-diff-details](/demo.gif?raw=true)
+![git-diff-details](https://github.com/samu/git-diff-details/blob/master/demo.gif?raw=true)
 
 ## TODOs
 
