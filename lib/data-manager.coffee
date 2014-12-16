@@ -1,6 +1,5 @@
 module.exports = class DiffDetailsDataManager
   constructor: ->
-    console.log "constructor"
     @invalidate()
 
   liesBetween: (hunk, row) ->
@@ -58,7 +57,7 @@ module.exports = class DiffDetailsDataManager
       unless oldLines is 0 and newLines > 0
         # create a new hunk entry if the hunk start of the previous line
         # is different to the current
-        if not hunk? or (newStart != hunk.start)
+        if not hunk? or (newStart isnt hunk.start)
           newEnd = null
           kind = null
           if newLines is 0 and oldLines > 0
