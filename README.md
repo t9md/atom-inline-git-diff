@@ -10,3 +10,8 @@ Use `alt-g alt-d` to toggle the diff or configure it to your liking:
 ```
 
 ![git-diff-details](/demo.gif?raw=true)
+
+## TODOs
+
+- [ ] Tests!
+- [ ] Configuration options
