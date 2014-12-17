@@ -10,7 +10,7 @@ module.exports = class Housekeeping extends Mixin
     @subscribe atom.project.getRepo(), 'status-changed', (path) =>
       @scheduleUpdate() if path is @editor.getPath()
 
-    @subscribeToCommand @editorView, 'git-diff-details:toggle-diff-details', =>
+    @subscribeToCommand @editorView, 'git-diff-details:toggle-git-diff-details', =>
       @toggleShowDiffDetails()
 
     @subscribe @editorView, 'editor:will-be-removed', =>
