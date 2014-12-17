@@ -93,8 +93,6 @@ module.exports = class AtomGitDiffDetailsView extends View
     if @showDiffDetails
       {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
-      console.log isDifferent
-
       if selectedHunk?
         return unless isDifferent
         @attach()
