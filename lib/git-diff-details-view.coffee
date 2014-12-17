@@ -9,7 +9,7 @@ module.exports = class AtomGitDiffDetailsView extends View
   @content: ->
     @div class: "atom-diff-details-outer", =>
       @div class: "atom-diff-details-main-panel", outlet: "mainPanel", =>
-        @div class: "atom-diff-details-main-panel-contents", outlet: "contents"
+        @div class: "editor", outlet: "contents"
       @div class: "atom-diff-details-button-panel", outlet: "buttonPanel", =>
         @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
         @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
