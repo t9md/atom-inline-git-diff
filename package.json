@@ -9,7 +9,7 @@
     "atom": ">=0.159.0"
   },
   "dependencies": {
-    "highlights": "0.14.0",
+    "highlights": "1.2.0",
     "mixto": "1.x"
   }
 }
