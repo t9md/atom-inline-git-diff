@@ -1,7 +1,7 @@
 {
   "name": "git-diff-details",
   "main": "./lib/main",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "View git diffs directly in atom",
   "repository": "https://github.com/samu/git-diff-details",
   "license": "MIT",
