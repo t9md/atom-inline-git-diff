@@ -13,6 +13,9 @@ module.exports = class Housekeeping extends Mixin
     @subscribeToCommand @editorView, 'git-diff-details:toggle-git-diff-details', =>
       @toggleShowDiffDetails()
 
+    @subscribeToCommand @editorView, 'git-diff-details:close-git-diff-details', =>
+      @closeDiffDetails()
+
     @subscribe @editorView, 'editor:will-be-removed', =>
       @cancelUpdate()
       @unsubscribe()

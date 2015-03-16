@@ -45,6 +45,13 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   toggleShowDiffDetails: ->
     @showDiffDetails = !@showDiffDetails
+    @updateDiffDetails()
+
+  closeDiffDetails: ->
+    @showDiffDetails = false
+    @updateDiffDetails()
+
+  updateDiffDetails: ->
     @diffDetailsDataManager.invalidatePreviousSelectedHunk()
     @updateCurrentRow()
     @updateDiffDetailsDisplay()
