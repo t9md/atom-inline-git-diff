@@ -5,6 +5,10 @@
       'label': 'Toggle atom-git-diff-details'
       'command': 'atom-git-diff-details:toggle'
     }
+    {
+      'label': 'Close atom-git-diff-details'
+      'command': 'atom-git-diff-details:close'
+    }
   ]
 'menu': [
   {
@@ -15,6 +19,10 @@
         {
           'label': 'Toggle'
           'command': 'atom-git-diff-details:toggle'
+        }
+        {
+          'label': 'Close'
+          'command': 'atom-git-diff-details:close'
         }
       ]
     ]
