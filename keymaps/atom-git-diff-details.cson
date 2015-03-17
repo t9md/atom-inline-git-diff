@@ -1,3 +1,4 @@
 '.editor':
   'alt-g alt-d': 'git-diff-details:toggle-git-diff-details'
+'.active.pane':
   'escape': 'git-diff-details:close-git-diff-details'
