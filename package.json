@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "highlights": "1.2.0",
-    "mixto": "1.x"
+    "mixto": "1.x",
+    "atom-space-pen-views": "^2.0.3",
+    "fs-plus": "^2.0.0"
   }
 }

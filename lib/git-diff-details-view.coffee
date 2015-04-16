@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'atom-space-pen-views'
 Highlights = require 'highlights'
 DiffDetailsDataManager = require './data-manager'
 Housekeeping = require './housekeeping'
@@ -14,8 +14,8 @@ module.exports = class AtomGitDiffDetailsView extends View
         @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
         @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
 
-  initialize: (@editorView) ->
-    {@editor} = @editorView
+  initialize: (@editor) ->
+    @editorView = atom.views.getView(@editor)
 
     @initializeHousekeeping()
     @preventFocusOut()
@@ -38,8 +38,8 @@ module.exports = class AtomGitDiffDetailsView extends View
   notifyContentsModified: =>
     return if @editor.isDestroyed()
     @diffDetailsDataManager.invalidate(atom.project.getRepo(),
-                                       @buffer.getPath(),
-                                       @buffer.getText())
+                                       @editor.getPath(),
+                                       @editor.getText())
     if @showDiffDetails
       @updateDiffDetailsDisplay()
 
@@ -64,7 +64,8 @@ module.exports = class AtomGitDiffDetailsView extends View
       @updateDiffDetailsDisplay() if currentRowChanged
 
   attach: ->
-    @editorView.appendToLinesView(this)
+    # @editorView.appendToLinesView(this)
+    # @panel.show()
 
   setPosition: (top) ->
     {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
