@@ -87,6 +87,7 @@ module.exports = class AtomGitDiffDetailsView extends View
   copy: (e) ->
     {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
     atom.clipboard.write(selectedHunk.oldString)
+    @closeDiffDetails()
 
   undo: (e) ->
     {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
