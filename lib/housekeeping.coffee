@@ -118,4 +118,4 @@ module.exports = class Housekeeping extends Mixin
 
   scheduleUpdate: ->
     @cancelUpdate()
-    @immediateId = setImmediate(@updateDiffs)
+    @immediateId = setImmediate(@notifyContentsModified)
