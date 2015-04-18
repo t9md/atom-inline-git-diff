@@ -93,14 +93,15 @@ module.exports = class AtomGitDiffDetailsView extends View
     @closeDiffDetails()
 
   undo: (e) ->
-    {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+    if @showDiffDetails
+      {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
-    if buffer = @editor.getBuffer()
-      if selectedHunk.kind is "m"
-        buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
-        buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
-      else
-        buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
+      if buffer = @editor.getBuffer()
+        if selectedHunk.kind is "m"
+          buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
+          buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
+        else
+          buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
 
   getActiveTextEditor: ->
     atom.workspace.getActiveTextEditor()
