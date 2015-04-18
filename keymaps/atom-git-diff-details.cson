@@ -1,6 +1,4 @@
 'atom-text-editor':
   'alt-g alt-d': 'git-diff-details:toggle-git-diff-details'
-'atom-text-editor':
   'alt-u': 'git-diff-details:undo'
-'atom-text-editor':
   'escape': 'git-diff-details:close-git-diff-details'
