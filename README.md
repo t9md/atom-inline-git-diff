@@ -15,5 +15,5 @@ Use `alt-g alt-d` to toggle the diff or configure it to your liking:
 ## TODOs
 
 - [ ] Tests!
-- [ ] Clean up deprecated api calls
+- [x] Clean up deprecated api calls
 - [ ] Configuration options
