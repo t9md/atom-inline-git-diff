@@ -1,4 +1,4 @@
-'.editor':
+'.atom-text-editor':
   'alt-g alt-d': 'git-diff-details:toggle-git-diff-details'
-'.active.pane':
+'.active.atom-pane':
   'escape': 'git-diff-details:close-git-diff-details'
