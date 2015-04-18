@@ -1,5 +1,4 @@
 {CompositeDisposable} = require 'atom'
-# {repositoryForPath} = require './helpers'
 fs = require "fs-plus"
 path = require "path"
 
@@ -37,10 +36,10 @@ module.exports = class Housekeeping extends Mixin
 
     @subscriptions.add(@editor.onDidStopChanging(@notifyContentsModified))
     @subscriptions.add(@editor.onDidChangePath(@notifyContentsModified))
+    @subscriptions.add(@editor.onDidChangeCursorPosition(=> @notifyChangeCursorPosition()))
 
     @subscribeToRepository()
     @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository()
-
 
     @subscriptions.add @editor.onDidDestroy =>
       @cancelUpdate()
@@ -97,10 +96,10 @@ module.exports = class Housekeeping extends Mixin
   #     @buffer.off 'contents-modified', @notifyContentsModified
   #     @buffer = null
 
-  subscribeToCursor: ->
-    @cursorSubscription?.dispose()
-    @cursorSubscription = @getActiveTextEditor()?.onDidChangeCursorPosition =>
-      @notifyChangeCursorPosition()
+  # subscribeToCursor: ->
+  #   @cursorSubscription?.dispose()
+  #   @cursorSubscription = @getActiveTextEditor()?.onDidChangeCursorPosition =>
+  #     @notifyChangeCursorPosition()
 
 
   unsubscribeFromCursor: ->

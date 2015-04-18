@@ -10,6 +10,4 @@ module.exports =
 
   activate: ->
     atom.workspace.observeTextEditors (editor) ->
-      # TODO pass editor directly
-      # editorView = atom.views.getView(editor)
       new AtomGitDiffDetailsView(editor)

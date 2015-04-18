@@ -1,4 +1,5 @@
 {View} = require 'atom-space-pen-views'
+{Range, Point} = require 'atom'
 Highlights = require 'highlights'
 DiffDetailsDataManager = require './data-manager'
 Housekeeping = require './housekeeping'
@@ -63,9 +64,12 @@ module.exports = class AtomGitDiffDetailsView extends View
       currentRowChanged = @updateCurrentRow()
       @updateDiffDetailsDisplay() if currentRowChanged
 
-  attach: ->
-    # @editorView.appendToLinesView(this)
-    # @panel.show()
+  attach: (position) ->
+    range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
+    @marker = @editor.markBufferRange(range)
+    @decoration = @editor.decorateMarker @marker,
+      type: 'overlay'
+      item: this
 
   setPosition: (top) ->
     {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
@@ -73,7 +77,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
-      filePath: @buffer.getBaseName()
+      filePath: @editor.getPath()
       fileContents: selectedHunk.oldString
 
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
@@ -103,14 +107,16 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       if selectedHunk?
         return unless isDifferent
-        @attach()
+        @attach(selectedHunk.end)
         @setPosition(selectedHunk.end)
         @populate(selectedHunk)
         return
 
       @previousSelectedHunk = selectedHunk
 
-    @detach()
+
+    @decoration.destroy()
+    @marker?.destroy()
     return
 
   updateCurrentRow: ->
