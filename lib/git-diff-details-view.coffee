@@ -48,9 +48,12 @@ module.exports = class AtomGitDiffDetailsView extends View
     @showDiffDetails = !@showDiffDetails
     @updateDiffDetails()
 
-  closeDiffDetails: ->
-    @showDiffDetails = false
-    @updateDiffDetails()
+  closeDiffDetails: (e) ->
+    if @showDiffDetails
+      @showDiffDetails = false
+      @updateDiffDetails()
+    else
+      e.abortKeyBinding()
 
   updateDiffDetails: ->
     @diffDetailsDataManager.invalidatePreviousSelectedHunk()

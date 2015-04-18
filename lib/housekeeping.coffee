@@ -21,11 +21,13 @@ module.exports = class Housekeeping extends Mixin
       # TODO do i have to clean up something?
       @subscriptions.dispose()
 
-    @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', =>
+
+
+    @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', =>
       @toggleShowDiffDetails()
 
-    @subscriptions.add atom.commands.add @editorView, 'git-diff-details:close-git-diff-details', =>
-      @closeDiffDetails()
+    @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) =>
+      @closeDiffDetails(e)
 
     @scheduleUpdate()
 
