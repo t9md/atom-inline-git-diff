@@ -1,4 +1,5 @@
-{View} = require 'atom'
+{View} = require 'atom-space-pen-views'
+{Range, Point} = require 'atom'
 Highlights = require 'highlights'
 DiffDetailsDataManager = require './data-manager'
 Housekeeping = require './housekeeping'
@@ -14,8 +15,8 @@ module.exports = class AtomGitDiffDetailsView extends View
         @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
         @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
 
-  initialize: (@editorView) ->
-    {@editor} = @editorView
+  initialize: (@editor) ->
+    @editorView = atom.views.getView(@editor)
 
     @initializeHousekeeping()
     @preventFocusOut()
@@ -37,9 +38,9 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   notifyContentsModified: =>
     return if @editor.isDestroyed()
-    @diffDetailsDataManager.invalidate(atom.project.getRepo(),
-                                       @buffer.getPath(),
-                                       @buffer.getText())
+    @diffDetailsDataManager.invalidate(@repositoryForPath(@editor.getPath()),
+                                       @editor.getPath(),
+                                       @editor.getText())
     if @showDiffDetails
       @updateDiffDetailsDisplay()
 
@@ -63,8 +64,12 @@ module.exports = class AtomGitDiffDetailsView extends View
       currentRowChanged = @updateCurrentRow()
       @updateDiffDetailsDisplay() if currentRowChanged
 
-  attach: ->
-    @editorView.appendToLinesView(this)
+  attach: (position) ->
+    range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
+    @marker = @editor.markBufferRange(range)
+    @decoration = @editor.decorateMarker @marker,
+      type: 'overlay'
+      item: this
 
   setPosition: (top) ->
     {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
@@ -72,7 +77,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
-      filePath: @buffer.getBaseName()
+      filePath: @editor.getPath()
       fileContents: selectedHunk.oldString
 
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
@@ -82,6 +87,7 @@ module.exports = class AtomGitDiffDetailsView extends View
   copy: (e) ->
     {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
     atom.clipboard.write(selectedHunk.oldString)
+    @closeDiffDetails()
 
   undo: (e) ->
     {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
@@ -102,14 +108,16 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       if selectedHunk?
         return unless isDifferent
-        @attach()
+        @attach(selectedHunk.end)
         @setPosition(selectedHunk.end)
         @populate(selectedHunk)
         return
 
       @previousSelectedHunk = selectedHunk
 
-    @detach()
+
+    @decoration.destroy()
+    @marker?.destroy()
     return
 
   updateCurrentRow: ->
