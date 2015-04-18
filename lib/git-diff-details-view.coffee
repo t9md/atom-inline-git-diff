@@ -115,7 +115,6 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       @previousSelectedHunk = selectedHunk
 
-
     @decoration?.destroy()
     @marker?.destroy()
     return
