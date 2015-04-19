@@ -31,6 +31,9 @@ module.exports = class Housekeeping extends Mixin
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) =>
         @undo()
 
+      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) =>
+        @copy()
+
       @scheduleUpdate()
 
   repositoryForPath: (goalPath) ->
