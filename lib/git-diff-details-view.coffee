@@ -71,7 +71,10 @@ module.exports = class AtomGitDiffDetailsView extends View
     @destroyDecoration()
     range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
     @marker = @editor.markBufferRange(range)
-    @decoration = @editor.decorateMarker @marker,
+    # @decoration = @editor.decorateMarker @marker,
+    #   type: 'overlay'
+    #   item: this
+    @editor.decorateMarker @marker,
       type: 'overlay'
       item: this
 
@@ -114,8 +117,8 @@ module.exports = class AtomGitDiffDetailsView extends View
     atom.workspace.getActiveTextEditor()
 
   destroyDecoration: ->
-    @decoration?.destroy()
-    @decoration = null
+    # @decoration?.destroy()
+    # @decoration = null
     @marker?.destroy()
     @marker = null
 
