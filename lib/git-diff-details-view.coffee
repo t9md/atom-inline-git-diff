@@ -97,7 +97,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     if @showDiffDetails
       {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
-      if buffer = @editor.getBuffer()
+      if selectedHunk? and buffer = @editor.getBuffer()
         if selectedHunk.kind is "m"
           buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
           buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
