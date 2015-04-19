@@ -60,8 +60,6 @@ module.exports = class AtomGitDiffDetailsView extends View
     @updateCurrentRow()
     @updateDiffDetailsDisplay()
 
-  # removeDecorations: ->
-
   notifyChangeCursorPosition: ->
     if @showDiffDetails
       currentRowChanged = @updateCurrentRow()
@@ -71,16 +69,9 @@ module.exports = class AtomGitDiffDetailsView extends View
     @destroyDecoration()
     range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
     @marker = @editor.markBufferRange(range)
-    # @decoration = @editor.decorateMarker @marker,
-    #   type: 'overlay'
-    #   item: this
     @editor.decorateMarker @marker,
       type: 'overlay'
       item: this
-
-  # setPosition: (top) ->
-  #   {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
-  #   @css(top: top + @editorView.lineHeight)
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
@@ -89,7 +80,6 @@ module.exports = class AtomGitDiffDetailsView extends View
 
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
     @contents.html(html)
-    # @contents.css(height: selectedHunk.oldLines.length * @editorView.lineHeight)
 
   copy: (e) ->
     if @showDiffDetails
@@ -117,8 +107,6 @@ module.exports = class AtomGitDiffDetailsView extends View
     atom.workspace.getActiveTextEditor()
 
   destroyDecoration: ->
-    # @decoration?.destroy()
-    # @decoration = null
     @marker?.destroy()
     @marker = null
 
@@ -129,7 +117,6 @@ module.exports = class AtomGitDiffDetailsView extends View
       if selectedHunk?
         return unless isDifferent
         @attach(selectedHunk.end)
-        # @setPosition(selectedHunk.end)
         @populate(selectedHunk)
         return
 
