@@ -60,7 +60,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     @updateCurrentRow()
     @updateDiffDetailsDisplay()
 
-  removeDecorations: ->
+  # removeDecorations: ->
 
   notifyChangeCursorPosition: ->
     if @showDiffDetails
@@ -75,9 +75,9 @@ module.exports = class AtomGitDiffDetailsView extends View
       type: 'overlay'
       item: this
 
-  setPosition: (top) ->
-    {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
-    @css(top: top + @editorView.lineHeight)
+  # setPosition: (top) ->
+  #   {left, top} = @editorView.pixelPositionForBufferPosition(row: top - 1, col: 0)
+  #   @css(top: top + @editorView.lineHeight)
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
@@ -86,7 +86,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
     @contents.html(html)
-    @contents.css(height: selectedHunk.oldLines.length * @editorView.lineHeight)
+    # @contents.css(height: selectedHunk.oldLines.length * @editorView.lineHeight)
 
   copy: (e) ->
     if @showDiffDetails
@@ -94,6 +94,8 @@ module.exports = class AtomGitDiffDetailsView extends View
       if selectedHunk?
         atom.clipboard.write(selectedHunk.oldString)
         @closeDiffDetails()
+    else
+      e.abortKeyBinding()
 
   undo: (e) ->
     if @showDiffDetails
@@ -105,6 +107,8 @@ module.exports = class AtomGitDiffDetailsView extends View
           buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
         else
           buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
+    else
+      e.abortKeyBinding()
 
   getActiveTextEditor: ->
     atom.workspace.getActiveTextEditor()
@@ -115,14 +119,14 @@ module.exports = class AtomGitDiffDetailsView extends View
     @marker?.destroy()
     @marker = null
 
-  updateDiffDetailsDisplay: ->
-    if @showDiffDetails
+  updateDiffDetailsDisplay:  ->
+    if  @showDiffDetails
       {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
       if selectedHunk?
         return unless isDifferent
         @attach(selectedHunk.end)
-        @setPosition(selectedHunk.end)
+        # @setPosition(selectedHunk.end)
         @populate(selectedHunk)
         return
 

@@ -20,6 +20,7 @@ module.exports = class Housekeeping extends Mixin
         @cancelUpdate()
         # @removeDecorations() # taken from git-diff
         # TODO do i have to clean up something?
+        @destroyDecoration()
         @subscriptions.dispose()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', =>
@@ -29,10 +30,10 @@ module.exports = class Housekeeping extends Mixin
         @closeDiffDetails(e)
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) =>
-        @undo()
+        @undo(e)
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) =>
-        @copy()
+        @copy(e)
 
       @scheduleUpdate()
 
