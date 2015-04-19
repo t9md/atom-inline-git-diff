@@ -36,6 +36,16 @@ module.exports = class AtomGitDiffDetailsView extends View
     @mainPanel.on 'mousedown', () ->
       false
 
+  getActiveTextEditor: ->
+    atom.workspace.getActiveTextEditor()
+
+  updateCurrentRow: ->
+    newCurrentRow = @getActiveTextEditor()?.getCursorBufferPosition()?.row + 1
+    if newCurrentRow != @currentRow
+      @currentRow = newCurrentRow
+      return true
+    return false
+
   notifyContentsModified: =>
     return if @editor.isDestroyed()
     @diffDetailsDataManager.invalidate(@repositoryForPath(@editor.getPath()),
@@ -43,6 +53,11 @@ module.exports = class AtomGitDiffDetailsView extends View
                                        @editor.getText())
     if @showDiffDetails
       @updateDiffDetailsDisplay()
+
+  updateDiffDetails: ->
+    @diffDetailsDataManager.invalidatePreviousSelectedHunk()
+    @updateCurrentRow()
+    @updateDiffDetailsDisplay()
 
   toggleShowDiffDetails: ->
     @showDiffDetails = !@showDiffDetails
@@ -55,31 +70,10 @@ module.exports = class AtomGitDiffDetailsView extends View
     else
       e.abortKeyBinding()
 
-  updateDiffDetails: ->
-    @diffDetailsDataManager.invalidatePreviousSelectedHunk()
-    @updateCurrentRow()
-    @updateDiffDetailsDisplay()
-
   notifyChangeCursorPosition: ->
     if @showDiffDetails
       currentRowChanged = @updateCurrentRow()
       @updateDiffDetailsDisplay() if currentRowChanged
-
-  attach: (position) ->
-    @destroyDecoration()
-    range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
-    @marker = @editor.markBufferRange(range)
-    @editor.decorateMarker @marker,
-      type: 'overlay'
-      item: this
-
-  populate: (selectedHunk) ->
-    html = @highlighter.highlightSync
-      filePath: @editor.getPath()
-      fileContents: selectedHunk.oldString
-
-    html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
-    @contents.html(html)
 
   copy: (e) ->
     if @showDiffDetails
@@ -103,12 +97,25 @@ module.exports = class AtomGitDiffDetailsView extends View
     else
       e.abortKeyBinding()
 
-  getActiveTextEditor: ->
-    atom.workspace.getActiveTextEditor()
-
   destroyDecoration: ->
     @marker?.destroy()
     @marker = null
+
+  attach: (position) ->
+    @destroyDecoration()
+    range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
+    @marker = @editor.markBufferRange(range)
+    @editor.decorateMarker @marker,
+      type: 'overlay'
+      item: this
+
+  populate: (selectedHunk) ->
+    html = @highlighter.highlightSync
+      filePath: @editor.getPath()
+      fileContents: selectedHunk.oldString
+
+    html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
+    @contents.html(html)
 
   updateDiffDetailsDisplay:  ->
     if  @showDiffDetails
@@ -124,10 +131,3 @@ module.exports = class AtomGitDiffDetailsView extends View
 
     @destroyDecoration()
     return
-
-  updateCurrentRow: ->
-    newCurrentRow = @getActiveTextEditor()?.getCursorBufferPosition()?.row + 1
-    if newCurrentRow != @currentRow
-      @currentRow = newCurrentRow
-      return true
-    return false
