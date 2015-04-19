@@ -68,6 +68,7 @@ module.exports = class AtomGitDiffDetailsView extends View
       @updateDiffDetailsDisplay() if currentRowChanged
 
   attach: (position) ->
+    @destroyDecoration()
     range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
     @marker = @editor.markBufferRange(range)
     @decoration = @editor.decorateMarker @marker,
@@ -106,6 +107,12 @@ module.exports = class AtomGitDiffDetailsView extends View
   getActiveTextEditor: ->
     atom.workspace.getActiveTextEditor()
 
+  destroyDecoration: ->
+    @decoration?.destroy()
+    @decoration = null
+    @marker?.destroy()
+    @marker = null
+
   updateDiffDetailsDisplay: ->
     if @showDiffDetails
       {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
@@ -119,8 +126,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       @previousSelectedHunk = selectedHunk
 
-    @decoration?.destroy()
-    @marker?.destroy()
+    @destroyDecoration()
     return
 
   updateCurrentRow: ->
