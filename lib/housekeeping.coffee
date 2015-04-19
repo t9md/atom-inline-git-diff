@@ -6,8 +6,13 @@ Mixin = require 'mixto'
 
 module.exports = class Housekeeping extends Mixin
   initializeHousekeeping: ->
+    @subscriptions = new CompositeDisposable()
+    @subscriptions.add @editor.onDidDestroy =>
+      @cancelUpdate()
+      @destroyDecoration()
+      @subscriptions.dispose()
+
     if repository = @repositoryForPath(@editor.getPath())
-      @subscriptions = new CompositeDisposable()
       @subscribeToRepository(repository)
 
       @subscriptions.add(@editor.onDidStopChanging(@notifyContentsModified))
@@ -15,13 +20,6 @@ module.exports = class Housekeeping extends Mixin
       @subscriptions.add(@editor.onDidChangeCursorPosition(=> @notifyChangeCursorPosition()))
 
       @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository()
-
-      @subscriptions.add @editor.onDidDestroy =>
-        @cancelUpdate()
-        # @removeDecorations() # taken from git-diff
-        # TODO do i have to clean up something?
-        @destroyDecoration()
-        @subscriptions.dispose()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', =>
         @toggleShowDiffDetails()
@@ -36,6 +34,19 @@ module.exports = class Housekeeping extends Mixin
         @copy(e)
 
       @scheduleUpdate()
+    else
+      # bypass all keybindings
+      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', (e) ->
+        e.abortKeyBinding()
+
+      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) ->
+        e.abortKeyBinding()
+
+      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) ->
+        e.abortKeyBinding()
+
+      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) ->
+        e.abortKeyBinding()
 
   repositoryForPath: (goalPath) ->
     for directory, i in atom.project.getDirectories()
