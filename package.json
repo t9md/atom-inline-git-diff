@@ -2,7 +2,7 @@
   "name": "git-diff-details",
   "main": "./lib/main",
   "version": "0.16.0",
-  "description": "View git diffs directly in atom",
+  "description": "View git diffs directly in atom.",
   "keywords": [
     "git",
     "diff",
