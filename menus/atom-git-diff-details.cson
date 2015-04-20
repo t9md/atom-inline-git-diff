@@ -2,11 +2,11 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle atom-git-diff-details'
+      'label': 'Toggle Git Diff Details'
       'command': 'git-diff-details:toggle-git-diff-details'
     }
     {
-      'label': 'Close atom-git-diff-details'
+      'label': 'Close Git Diff Details'
       'command': 'git-diff-details:close-git-diff-details'
     }
   ]
@@ -14,7 +14,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'atom-git-diff-details'
+      'label': 'Git Diff Details'
       'submenu': [
         {
           'label': 'Toggle'
