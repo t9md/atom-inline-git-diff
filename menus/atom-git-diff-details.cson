@@ -3,11 +3,11 @@
   'atom-text-editor': [
     {
       'label': 'Toggle atom-git-diff-details'
-      'command': 'atom-git-diff-details:toggle'
+      'command': 'git-diff-details:toggle-git-diff-details'
     }
     {
       'label': 'Close atom-git-diff-details'
-      'command': 'atom-git-diff-details:close'
+      'command': 'git-diff-details:close-git-diff-details'
     }
   ]
 'menu': [
@@ -18,11 +18,11 @@
       'submenu': [
         {
           'label': 'Toggle'
-          'command': 'atom-git-diff-details:toggle'
+          'command': 'git-diff-details:toggle-git-diff-details'
         }
         {
           'label': 'Close'
-          'command': 'atom-git-diff-details:close'
+          'command': 'git-diff-details:close-git-diff-details'
         }
       ]
     ]
