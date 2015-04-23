@@ -25,13 +25,13 @@ module.exports = class Housekeeping extends Mixin
         @toggleShowDiffDetails()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) =>
-        @closeDiffDetails(e)
+        if @showDiffDetails then @closeDiffDetails() else e.abortKeyBinding()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) =>
-        @undo(e)
+        if @showDiffDetails then @undo() else e.abortKeyBinding()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) =>
-        @copy(e)
+        if @showDiffDetails then @copy() else e.abortKeyBinding()
 
       @scheduleUpdate()
     else

@@ -63,39 +63,31 @@ module.exports = class AtomGitDiffDetailsView extends View
     @showDiffDetails = !@showDiffDetails
     @updateDiffDetails()
 
-  closeDiffDetails: (e) ->
-    if @showDiffDetails
-      @showDiffDetails = false
-      @updateDiffDetails()
-    else
-      e.abortKeyBinding()
+  closeDiffDetails: ->
+    @showDiffDetails = false
+    @updateDiffDetails()
 
   notifyChangeCursorPosition: ->
     if @showDiffDetails
       currentRowChanged = @updateCurrentRow()
       @updateDiffDetailsDisplay() if currentRowChanged
 
-  copy: (e) ->
-    if @showDiffDetails
-      {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
-      if selectedHunk?
-        atom.clipboard.write(selectedHunk.oldString)
-        @closeDiffDetails()
-    else
-      e.abortKeyBinding()
+  copy: ->
+    {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+    if selectedHunk?
+      atom.clipboard.write(selectedHunk.oldString)
+      @closeDiffDetails() if atom.config.get('git-diff-details.closeAfterCopy')
 
-  undo: (e) ->
-    if @showDiffDetails
-      {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
+  undo: ->
+    {selectedHunk} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
-      if selectedHunk? and buffer = @editor.getBuffer()
-        if selectedHunk.kind is "m"
-          buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
-          buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
-        else
-          buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
-    else
-      e.abortKeyBinding()
+    if selectedHunk? and buffer = @editor.getBuffer()
+      if selectedHunk.kind is "m"
+        buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
+        buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
+      else
+        buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
+      @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
     @marker?.destroy()
@@ -118,7 +110,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     @contents.html(html)
 
   updateDiffDetailsDisplay:  ->
-    if  @showDiffDetails
+    if @showDiffDetails
       {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
       if selectedHunk?
@@ -126,6 +118,8 @@ module.exports = class AtomGitDiffDetailsView extends View
         @attach(selectedHunk.end)
         @populate(selectedHunk)
         return
+      else
+        @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
       @previousSelectedHunk = selectedHunk
 
