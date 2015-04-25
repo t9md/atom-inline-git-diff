@@ -21,31 +21,31 @@ module.exports = class Housekeeping extends Mixin
 
       @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', =>
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', =>
         @toggleShowDiffDetails()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) =>
         if @showDiffDetails then @closeDiffDetails() else e.abortKeyBinding()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) =>
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:undo', (e) =>
         if @showDiffDetails then @undo() else e.abortKeyBinding()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) =>
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:copy', (e) =>
         if @showDiffDetails then @copy() else e.abortKeyBinding()
 
       @scheduleUpdate()
     else
       # bypass all keybindings
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:toggle-git-diff-details', (e) ->
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', (e) ->
         e.abortKeyBinding()
 
       @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) ->
         e.abortKeyBinding()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:undo', (e) ->
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:undo', (e) ->
         e.abortKeyBinding()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:copy', (e) ->
+      @subscriptions.add atom.commands.add @editorView, 'git-diff-details:copy', (e) ->
         e.abortKeyBinding()
 
   repositoryForPath: (goalPath) ->

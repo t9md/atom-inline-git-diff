@@ -109,7 +109,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
     @contents.html(html)
 
-  updateDiffDetailsDisplay:  ->
+  updateDiffDetailsDisplay: ->
     if @showDiffDetails
       {selectedHunk, isDifferent} = @diffDetailsDataManager.getSelectedHunk(@currentRow)
 
