@@ -19,7 +19,7 @@ module.exports = class Housekeeping extends Mixin
       @subscriptions.add(@editor.onDidChangePath(@notifyContentsModified))
       @subscriptions.add(@editor.onDidChangeCursorPosition(=> @notifyChangeCursorPosition()))
 
-      @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository()
+      @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository(repository)
 
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', =>
         @toggleShowDiffDetails()
