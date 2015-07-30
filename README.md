@@ -14,4 +14,4 @@ Keybindings:
 
 - [ ] Tests!
 - [x] Clean up deprecated api calls
-- [ ] Configuration options
+- [x] Configuration options
