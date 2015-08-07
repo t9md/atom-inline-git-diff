@@ -12,14 +12,14 @@ module.exports = class Housekeeping extends Mixin
       @destroyDecoration()
       @subscriptions.dispose()
 
-    if repository = @repositoryForPath(@editor.getPath())
-      @subscribeToRepository(repository)
+    if @repositoryForPath(@editor.getPath())
+      @subscribeToRepository()
 
       @subscriptions.add(@editor.onDidStopChanging(@notifyContentsModified))
       @subscriptions.add(@editor.onDidChangePath(@notifyContentsModified))
       @subscriptions.add(@editor.onDidChangeCursorPosition(=> @notifyChangeCursorPosition()))
 
-      @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository(repository)
+      @subscriptions.add atom.project.onDidChangePaths => @subscribeToRepository()
 
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', =>
         @toggleShowDiffDetails()
@@ -54,11 +54,12 @@ module.exports = class Housekeeping extends Mixin
         return atom.project.getRepositories()[i]
     null
 
-  subscribeToRepository: (repository) ->
-    @subscriptions.add repository.onDidChangeStatuses =>
-      @scheduleUpdate()
-    @subscriptions.add repository.onDidChangeStatus (changedPath) =>
-      @scheduleUpdate() if changedPath is @editor.getPath()
+  subscribeToRepository: ->
+    if repository = @repositoryForPath(@editor.getPath())
+      @subscriptions.add repository.onDidChangeStatuses =>
+        @scheduleUpdate()
+      @subscriptions.add repository.onDidChangeStatus (changedPath) =>
+        @scheduleUpdate() if changedPath is @editor.getPath()
 
   unsubscribeFromCursor: ->
     @cursorSubscription?.dispose()
