@@ -92,21 +92,35 @@ module.exports = class AtomGitDiffDetailsView extends View
   destroyDecoration: ->
     @marker?.destroy()
     @marker = null
+    @marker2?.destroy()
+    @marker2 = null
 
-  attach: (position) ->
+  attach: (selectedHunk) ->
     @destroyDecoration()
-    range = new Range(new Point(position - 1, 0), new Point(position - 1, 0))
+    range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
     @marker = @editor.markBufferRange(range)
     @editor.decorateMarker @marker,
+      # type: 'block'
       type: 'overlay'
+      position: 'after'
       item: this
+
+    range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
+    @marker2 = @editor.markBufferRange(range)
+    @editor.decorateMarker(@marker2, type: 'line', class: "git-diff-details-new")
 
   populate: (selectedHunk) ->
     html = @highlighter.highlightSync
       filePath: @editor.getPath()
       fileContents: selectedHunk.oldString
 
-    html = html.replace('<pre class="editor editor-colors">', '').replace('</pre>', '')
+    html = html .replace('<pre class="editor editor-colors">', '')
+                # .replace('</pre>', '')
+
+    html = selectedHunk.oldString .split(/r\n?|\n/g)
+                                  .map((line) -> line.replace(/\s/g, '&nbsp;'))
+                                  .map((line) -> "<div class='line git-diff-details-old'>#{line}</div>")
+
     @contents.html(html)
 
   updateDiffDetailsDisplay: ->
@@ -115,7 +129,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       if selectedHunk?
         return unless isDifferent
-        @attach(selectedHunk.end)
+        @attach(selectedHunk)
         @populate(selectedHunk)
         return
       else
