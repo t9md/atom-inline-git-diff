@@ -24,8 +24,9 @@ module.exports = class Housekeeping extends Mixin
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', =>
         @toggleShowDiffDetails()
 
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) =>
-        if @showDiffDetails then @closeDiffDetails() else e.abortKeyBinding()
+      @subscriptions.add atom.commands.add @editorView,
+        'core:close': (e) => @closeDiffDetails()
+        'core:cancel': (e) => @closeDiffDetails()
 
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:undo', (e) =>
         if @showDiffDetails then @undo() else e.abortKeyBinding()
@@ -37,9 +38,6 @@ module.exports = class Housekeeping extends Mixin
     else
       # bypass all keybindings
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:toggle-git-diff-details', (e) ->
-        e.abortKeyBinding()
-
-      @subscriptions.add atom.commands.add "atom-text-editor", 'git-diff-details:close-git-diff-details', (e) ->
         e.abortKeyBinding()
 
       @subscriptions.add atom.commands.add @editorView, 'git-diff-details:undo', (e) ->
