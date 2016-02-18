@@ -43,9 +43,10 @@ module.exports = class DiffDetailsDataManager
     @lineDiffDetails = null
 
     repo = repo.getRepo(path)
-    repo.getLineDiffDetails(repo.relativize(path), text)
+    
+    options = ignoreEolWhitespace: process.platform is 'win32'
 
-    rawLineDiffDetails = repo.getLineDiffDetails(repo.relativize(path), text)
+    rawLineDiffDetails = repo.getLineDiffDetails(repo.relativize(path), text, options)
 
     return unless rawLineDiffDetails?
 
