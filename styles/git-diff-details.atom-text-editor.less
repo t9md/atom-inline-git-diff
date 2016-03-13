@@ -1,6 +1,7 @@
 @import "ui-variables";
 
 .git-diff-details-outer {
+  // background-color: rgba(232, 120, 120, 0.4);
   background-color: @base-background-color;
   width: 100%;
 }
@@ -16,11 +17,11 @@
 
 .line {
   &.git-diff-details-new {
-    background-color: rgba(162, 232, 120, 0.4) !important;
-    // color: black !important;
-    // span {
-    //   color: black !important;
-    // }
+    background-color: rgba(162, 232, 120, 0.6) !important;
+    color: black !important;
+    span {
+      color: black !important;
+    }
 
     .invisible-character {
       opacity: 0;
@@ -28,10 +29,10 @@
   }
 
   &.git-diff-details-old {
-    background-color: rgba(232, 120, 120, 0.4) !important;
-    // color: black !important;
-    // span {
-    //   color: black !important;
-    // }
+    background-color: rgba(232, 120, 120, 0.6) !important;
+    color: black !important;
+    span {
+      color: black !important;
+    }
   }
 }
