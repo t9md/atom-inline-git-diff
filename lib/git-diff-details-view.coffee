@@ -11,8 +11,8 @@ module.exports = class AtomGitDiffDetailsView extends View
       @div class: "git-diff-details-main-panel", outlet: "mainPanel", =>
         @div class: "editor git-diff-editor", outlet: "contents"
       @div class: "git-diff-details-button-panel", outlet: "buttonPanel", =>
-        @button class: 'btn btn-primary inline-block-tight', click: "copy", 'Copy'
-        @button class: 'btn btn-error inline-block-tight', click: "undo", 'Undo'
+        @button class: 'btn btn-primary btn-xs inline-block-tight', click: "copy", 'Copy'
+        @button class: 'btn btn-error btn-xs inline-block-tight', click: "undo", 'Undo'
 
   initialize: (@editor) ->
     @editorView = atom.views.getView(@editor)
