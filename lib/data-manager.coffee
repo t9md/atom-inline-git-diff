@@ -32,7 +32,7 @@ module.exports = class DiffDetailsDataManager
           @selectedHunk = hunk
           break
 
-  updateLineDiffDetails: () ->
+  updateLineDiffDetails: ->
     if !@lineDiffDetails? or @lineDiffDetailsInvalidated
       @prepareLineDiffDetails(@repo, @path, @text)
 
@@ -43,7 +43,7 @@ module.exports = class DiffDetailsDataManager
     @lineDiffDetails = null
 
     repo = repo.getRepo(path)
-    
+
     options = ignoreEolWhitespace: process.platform is 'win32'
 
     rawLineDiffDetails = repo.getLineDiffDetails(repo.relativize(path), text, options)
