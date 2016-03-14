@@ -8,10 +8,4 @@ Keybindings:
   * `alt-u` for undo
   * `alt-c` for copy
 
-![git-diff-details](https://github.com/samu/git-diff-details/blob/master/demo.gif?raw=true)
-
-## TODOs
-
-- [ ] Tests!
-- [x] Clean up deprecated api calls
-- [x] Configuration options
+![git-diff-details](https://github.com/samu/git-diff-details/blob/master/demo.png?raw=true)
