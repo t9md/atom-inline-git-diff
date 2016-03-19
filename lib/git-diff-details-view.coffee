@@ -75,8 +75,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
     if selectedHunk? and buffer = @editor.getBuffer()
       if selectedHunk.kind is "m"
-        buffer.deleteRows(selectedHunk.start - 1, selectedHunk.end - 1)
-        buffer.insert([selectedHunk.start - 1, 0], selectedHunk.oldString)
+        buffer.setTextInRange([[selectedHunk.start - 1, 0], [selectedHunk.end, 0]], selectedHunk.oldString)
       else
         buffer.insert([selectedHunk.start, 0], selectedHunk.oldString)
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
