@@ -96,9 +96,10 @@ module.exports = class AtomGitDiffDetailsView extends View
       position: 'after'
       item: this
 
-    range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
-    @newLinesMarker = @editor.markBufferRange(range)
-    @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
+    unless selectedHunk.kind is "d"
+      range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
+      @newLinesMarker = @editor.markBufferRange(range)
+      @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
 
   populate: (selectedHunk) ->
     html = selectedHunk.oldString .split(/\r\n?|\n/g)
