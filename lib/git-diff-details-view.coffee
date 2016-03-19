@@ -82,23 +82,23 @@ module.exports = class AtomGitDiffDetailsView extends View
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
-    @marker?.destroy()
-    @marker = null
-    @marker2?.destroy()
-    @marker2 = null
+    @oldLinesMarker?.destroy()
+    @oldLinesMarker = null
+    @newLinesMarker?.destroy()
+    @newLinesMarker = null
 
   attach: (selectedHunk) ->
     @destroyDecoration()
     range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
-    @marker = @editor.markBufferRange(range)
-    @editor.decorateMarker @marker,
+    @oldLinesMarker = @editor.markBufferRange(range)
+    @editor.decorateMarker @oldLinesMarker,
       type: 'block'
       position: 'after'
       item: this
 
     range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
-    @marker2 = @editor.markBufferRange(range)
-    @editor.decorateMarker(@marker2, type: 'line', class: "git-diff-details-new")
+    @newLinesMarker = @editor.markBufferRange(range)
+    @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
 
   populate: (selectedHunk) ->
     html = selectedHunk.oldString .split(/\r\n?|\n/g)
