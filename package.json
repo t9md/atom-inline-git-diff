@@ -16,8 +16,9 @@
     "atom": ">=1.6.0"
   },
   "dependencies": {
-    "mixto": "1.x",
     "atom-space-pen-views": "^2.0.3",
-    "fs-plus": "^2.0.0"
+    "fs-plus": "^2.0.0",
+    "mixto": "1.x",
+    "underscore-plus": "^1.6.6"
   }
 }

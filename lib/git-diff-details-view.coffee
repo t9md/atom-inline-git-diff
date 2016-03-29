@@ -1,5 +1,6 @@
 {View} = require 'atom-space-pen-views'
 {Range, Point} = require 'atom'
+_ = require 'underscore-plus'
 DiffDetailsDataManager = require './data-manager'
 Housekeeping = require './housekeeping'
 
@@ -102,9 +103,9 @@ module.exports = class AtomGitDiffDetailsView extends View
       @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
 
   populate: (selectedHunk) ->
-    html = selectedHunk.oldString .split(/\r\n?|\n/g)
-                                  .map((line) -> line.replace(/\s/g, '&nbsp;'))
-                                  .map((line) -> "<div class='line git-diff-details-old'>#{line}</div>")
+    html = _.escape(selectedHunk.oldString).split(/\r\n?|\n/g)
+                                           .map((line) -> line.replace(/\s/g, '&nbsp;'))
+                                           .map((line) -> "<div class='line git-diff-details-old'>#{line}</div>")
     @contents.html(html)
 
   updateDiffDetailsDisplay: ->
