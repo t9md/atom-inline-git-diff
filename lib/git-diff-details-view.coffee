@@ -90,6 +90,12 @@ module.exports = class AtomGitDiffDetailsView extends View
     @newLinesMarker?.destroy()
     @newLinesMarker = null
 
+  decorateLines: (editor, start, end, type) ->
+    range = new Range(new Point(start, 0), new Point(end, 0))
+    marker = editor.markBufferRange(range)
+    editor.decorateMarker(marker, type: 'line', class: "git-diff-details-#{type}")
+    marker
+
   attach: (selectedHunk) ->
     @destroyDecoration()
     range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
@@ -100,16 +106,12 @@ module.exports = class AtomGitDiffDetailsView extends View
       item: this
 
     unless selectedHunk.kind is "d"
-      range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
-      @newLinesMarker = @editor.markBufferRange(range)
-      @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
+      @newLinesMarker = @decorateLines(@editor, selectedHunk.start - 1, selectedHunk.end, "new")
 
   populate: (selectedHunk) ->
     @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
     @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
-    range = new Range(new Point(0, 0), new Point(selectedHunk.oldLines.length, 0))
-    @oldLinesMarker = @diffEditor.markBufferRange(range)
-    @diffEditor.decorateMarker(@oldLinesMarker, type: 'line', class: "git-diff-details-old")
+    @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old")
     element = atom.views.getView(@diffEditor)
     @contents.html(element)
 
