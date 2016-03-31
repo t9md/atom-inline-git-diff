@@ -83,12 +83,12 @@ module.exports = class AtomGitDiffDetailsView extends View
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
+    @newLinesMarker?.destroy()
+    @newLinesMarker = null
     @oldBlockMarker?.destroy()
     @oldBlockMarker = null
     @oldLinesMarker?.destroy()
     @oldLinesMarker = null
-    @newLinesMarker?.destroy()
-    @newLinesMarker = null
 
   decorateLines: (editor, start, end, type) ->
     range = new Range(new Point(start, 0), new Point(end, 0))
@@ -96,19 +96,15 @@ module.exports = class AtomGitDiffDetailsView extends View
     editor.decorateMarker(marker, type: 'line', class: "git-diff-details-#{type}")
     marker
 
-  attach: (selectedHunk) ->
+  display: (selectedHunk) ->
     @destroyDecoration()
-    range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
-    @oldBlockMarker = @editor.markBufferRange(range)
-    @editor.decorateMarker @oldBlockMarker,
-      type: 'block'
-      position: 'after'
-      item: this
-
-    unless selectedHunk.kind is "d"
+    if selectedHunk.kind is "m"
       @newLinesMarker = @decorateLines(@editor, selectedHunk.start - 1, selectedHunk.end, "new")
 
-  populate: (selectedHunk) ->
+    range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
+    @oldBlockMarker = @editor.markBufferRange(range)
+    @editor.decorateMarker(@oldBlockMarker, type: 'block', position: 'after', item: this)
+
     @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
     @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
     @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old")
@@ -121,8 +117,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       if selectedHunk?
         return unless isDifferent
-        @attach(selectedHunk)
-        @populate(selectedHunk)
+        @display(selectedHunk)
         return
       else
         @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
