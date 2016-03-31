@@ -19,6 +19,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     @preventFocusOut()
 
     @diffDetailsDataManager = new DiffDetailsDataManager()
+    @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false)
 
     @showDiffDetails = false
     @lineDiffDetails = null
@@ -82,6 +83,8 @@ module.exports = class AtomGitDiffDetailsView extends View
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
+    @oldBlockMarker?.destroy()
+    @oldBlockMarker = null
     @oldLinesMarker?.destroy()
     @oldLinesMarker = null
     @newLinesMarker?.destroy()
@@ -90,8 +93,8 @@ module.exports = class AtomGitDiffDetailsView extends View
   attach: (selectedHunk) ->
     @destroyDecoration()
     range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
-    @oldLinesMarker = @editor.markBufferRange(range)
-    @editor.decorateMarker @oldLinesMarker,
+    @oldBlockMarker = @editor.markBufferRange(range)
+    @editor.decorateMarker @oldBlockMarker,
       type: 'block'
       position: 'after'
       item: this
@@ -102,10 +105,13 @@ module.exports = class AtomGitDiffDetailsView extends View
       @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
 
   populate: (selectedHunk) ->
-    html = _.escape(selectedHunk.oldString).split(/\r\n?|\n/g)
-                                           .map((line) -> line.replace(/\s/g, '&nbsp;'))
-                                           .map((line) -> "<div class='line git-diff-details-old'>#{line}</div>")
-    @contents.html(html)
+    @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
+    @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
+    range = new Range(new Point(0, 0), new Point(selectedHunk.oldLines.length, 0))
+    @oldLinesMarker = @diffEditor.markBufferRange(range)
+    @diffEditor.decorateMarker(@oldLinesMarker, type: 'line', class: "git-diff-details-old")
+    element = atom.views.getView(@diffEditor)
+    @contents.html(element)
 
   updateDiffDetailsDisplay: ->
     if @showDiffDetails

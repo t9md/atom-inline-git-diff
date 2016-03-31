@@ -1,4 +1,5 @@
 @import "ui-variables";
+@import "syntax-variables";
 
 .git-diff-details-outer {
   background-color: @base-background-color;
@@ -17,22 +18,10 @@
 
 .line {
   &.git-diff-details-new {
-    background-color: rgba(162, 232, 120, 0.7) !important;
-    color: black !important;
-    span {
-      color: black !important;
-    }
-
-    .invisible-character {
-      opacity: 0;
-    }
+    background-color: fade(@syntax-color-added, 25%);
   }
 
   &.git-diff-details-old {
-    background-color: rgba(232, 120, 120, 0.7) !important;
-    color: black !important;
-    span {
-      color: black !important;
-    }
+    background-color: fade(@syntax-color-removed, 25%);
   }
 }
