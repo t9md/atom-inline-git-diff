@@ -107,7 +107,10 @@ module.exports = class AtomGitDiffDetailsView extends View
     @oldBlockMarker = @editor.markBufferRange(range)
     @editor.decorateMarker(@oldBlockMarker, type: 'block', position: 'after', item: this)
 
-    @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
+    if atom.config.get('git-diff-details.enableSyntaxHighlighting')
+      @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
+    else
+      @diffEditor.setGrammar(@diffEditor.grammarRegistry.grammarForScopeName("text.plain"))
     @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
     @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old")
 
