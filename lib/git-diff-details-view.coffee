@@ -20,6 +20,8 @@ module.exports = class AtomGitDiffDetailsView extends View
 
     @diffDetailsDataManager = new DiffDetailsDataManager()
     @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false)
+    diffEditorElement = atom.views.getView(@diffEditor)
+    @contents.html(diffEditorElement)
 
     @showDiffDetails = false
     @lineDiffDetails = null
@@ -108,8 +110,6 @@ module.exports = class AtomGitDiffDetailsView extends View
     @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
     @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
     @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old")
-    element = atom.views.getView(@diffEditor)
-    @contents.html(element)
 
   updateDiffDetailsDisplay: ->
     if @showDiffDetails
