@@ -19,7 +19,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     @preventFocusOut()
 
     @diffDetailsDataManager = new DiffDetailsDataManager()
-    @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false)
+    @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false, scrollPastEnd: false)
     diffEditorElement = atom.views.getView(@diffEditor)
     @contents.html(diffEditorElement)
 
