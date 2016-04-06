@@ -12,6 +12,11 @@ module.exports =
       default: true
       title: "Keep view toggled when leaving a diff"
 
+    enableSyntaxHighlighting:
+      type: "boolean"
+      default: false
+      title: "Enable syntax highlighting in diff view"
+
   activate: ->
     atom.workspace.observeTextEditors (editor) ->
       new AtomGitDiffDetailsView(editor)

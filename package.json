@@ -13,7 +13,7 @@
   "repository": "https://github.com/samu/git-diff-details",
   "license": "MIT",
   "engines": {
-    "atom": ">=1.6.0"
+    "atom": ">=1.7.0"
   },
   "dependencies": {
     "atom-space-pen-views": "^2.0.3",

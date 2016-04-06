@@ -19,6 +19,9 @@ module.exports = class AtomGitDiffDetailsView extends View
     @preventFocusOut()
 
     @diffDetailsDataManager = new DiffDetailsDataManager()
+    @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false, scrollPastEnd: false)
+    diffEditorElement = atom.views.getView(@diffEditor)
+    @contents.html(diffEditorElement)
 
     @showDiffDetails = false
     @lineDiffDetails = null
@@ -82,30 +85,34 @@ module.exports = class AtomGitDiffDetailsView extends View
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
-    @oldLinesMarker?.destroy()
-    @oldLinesMarker = null
     @newLinesMarker?.destroy()
     @newLinesMarker = null
+    @oldBlockMarker?.destroy()
+    @oldBlockMarker = null
+    @oldLinesMarker?.destroy()
+    @oldLinesMarker = null
 
-  attach: (selectedHunk) ->
+  decorateLines: (editor, start, end, type) ->
+    range = new Range(new Point(start, 0), new Point(end, 0))
+    marker = editor.markBufferRange(range)
+    editor.decorateMarker(marker, type: 'line', class: "git-diff-details-#{type}")
+    marker
+
+  display: (selectedHunk) ->
     @destroyDecoration()
+    if selectedHunk.kind is "m"
+      @newLinesMarker = @decorateLines(@editor, selectedHunk.start - 1, selectedHunk.end, "new")
+
     range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
-    @oldLinesMarker = @editor.markBufferRange(range)
-    @editor.decorateMarker @oldLinesMarker,
-      type: 'block'
-      position: 'after'
-      item: this
+    @oldBlockMarker = @editor.markBufferRange(range)
+    @editor.decorateMarker(@oldBlockMarker, type: 'block', position: 'after', item: this)
 
-    unless selectedHunk.kind is "d"
-      range = new Range(new Point(selectedHunk.start - 1, 0), new Point(selectedHunk.end, 0))
-      @newLinesMarker = @editor.markBufferRange(range)
-      @editor.decorateMarker(@newLinesMarker, type: 'line', class: "git-diff-details-new")
-
-  populate: (selectedHunk) ->
-    html = _.escape(selectedHunk.oldString).split(/\r\n?|\n/g)
-                                           .map((line) -> line.replace(/\s/g, '&nbsp;'))
-                                           .map((line) -> "<div class='line git-diff-details-old'>#{line}</div>")
-    @contents.html(html)
+    if atom.config.get('git-diff-details.enableSyntaxHighlighting')
+      @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
+    else
+      @diffEditor.setGrammar(@diffEditor.grammarRegistry.grammarForScopeName("text.plain"))
+    @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
+    @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old")
 
   updateDiffDetailsDisplay: ->
     if @showDiffDetails
@@ -113,8 +120,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
       if selectedHunk?
         return unless isDifferent
-        @attach(selectedHunk)
-        @populate(selectedHunk)
+        @display(selectedHunk)
         return
       else
         @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
