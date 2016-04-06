@@ -8,4 +8,7 @@ Keybindings:
   * `alt-u` for undo
   * `alt-c` for copy
 
-![git-diff-details](https://github.com/samu/git-diff-details/blob/master/demo.png?raw=true)
+You can choose whether the diff should be highlighted or not:
+
+![git-diff-details](https://github.com/samu/git-diff-details/blob/master/flat.png?raw=true)
+![git-diff-details](https://github.com/samu/git-diff-details/blob/master/highlighted.png?raw=true)
