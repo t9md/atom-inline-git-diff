@@ -17,6 +17,11 @@ module.exports =
       default: false
       title: "Enable syntax highlighting in diff view"
 
+    showWordDiffs:
+      type: "boolean"
+      default: true
+      title: "Show word diffs"
+
   activate: ->
     atom.workspace.observeTextEditors (editor) ->
       new AtomGitDiffDetailsView(editor)

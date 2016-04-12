@@ -22,6 +22,7 @@ module.exports = class AtomGitDiffDetailsView extends View
     @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false, scrollPastEnd: false)
     diffEditorElement = atom.views.getView(@diffEditor)
     @contents.html(diffEditorElement)
+    @markers = []
 
     @showDiffDetails = false
     @lineDiffDetails = null
@@ -85,18 +86,24 @@ module.exports = class AtomGitDiffDetailsView extends View
       @closeDiffDetails() unless atom.config.get('git-diff-details.keepViewToggled')
 
   destroyDecoration: ->
-    @newLinesMarker?.destroy()
-    @newLinesMarker = null
-    @oldBlockMarker?.destroy()
-    @oldBlockMarker = null
-    @oldLinesMarker?.destroy()
-    @oldLinesMarker = null
+    for marker in @markers
+      marker.destroy()
+    @markers = []
 
   decorateLines: (editor, start, end, type) ->
     range = new Range(new Point(start, 0), new Point(end, 0))
     marker = editor.markBufferRange(range)
     editor.decorateMarker(marker, type: 'line', class: "git-diff-details-#{type}")
-    marker
+    @markers.push(marker)
+
+  decorateWords: (editor, start, words, type) ->
+    return unless words
+    for word in words when word.changed
+      row = start + word.offsetRow
+      range = new Range(new Point(row, word.startCol), new Point(row, word.endCol))
+      marker = editor.markBufferRange(range)
+      editor.decorateMarker(marker, type: 'highlight', class: "git-diff-details-#{type}")
+      @markers.push(marker)
 
   display: (selectedHunk) ->
     @destroyDecoration()
@@ -107,15 +114,20 @@ module.exports = class AtomGitDiffDetailsView extends View
       else "flat"
 
     if selectedHunk.kind is "m"
-      @newLinesMarker = @decorateLines(@editor, selectedHunk.start - 1, selectedHunk.end, "new-#{classPostfix}")
+      @decorateLines(@editor, selectedHunk.start - 1, selectedHunk.end, "new-#{classPostfix}")
+      if atom.config.get('git-diff-details.showWordDiffs')
+        @decorateWords(@editor, selectedHunk.start - 1, selectedHunk.newWords, "new-#{classPostfix}")
 
     range = new Range(new Point(selectedHunk.end - 1, 0), new Point(selectedHunk.end - 1, 0))
-    @oldBlockMarker = @editor.markBufferRange(range)
-    @editor.decorateMarker(@oldBlockMarker, type: 'block', position: 'after', item: this)
+    marker = @editor.markBufferRange(range)
+    @editor.decorateMarker(marker, type: 'block', position: 'after', item: this)
+    @markers.push(marker)
 
     @diffEditor.setGrammar(@getActiveTextEditor()?.getGrammar())
     @diffEditor.setText(selectedHunk.oldString.replace(/[\r\n]+$/g, ""))
-    @oldLinesMarker = @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old-#{classPostfix}")
+    @decorateLines(@diffEditor, 0, selectedHunk.oldLines.length, "old-#{classPostfix}")
+    if atom.config.get('git-diff-details.showWordDiffs')
+      @decorateWords(@diffEditor, 0, selectedHunk.oldWords, "old-#{classPostfix}")
 
   updateDiffDetailsDisplay: ->
     if @showDiffDetails
