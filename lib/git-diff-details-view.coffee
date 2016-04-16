@@ -44,7 +44,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   notifyContentsModified: =>
     return if @editor.isDestroyed()
-    @diffDetailsDataManager.invalidate(@repositoryForPath(@editor.getPath()),
+    @diffDetailsDataManager?.invalidate(@repositoryForPath(@editor.getPath()),
                                        @editor.getPath(),
                                        @editor.getText())
     if @showDiffDetails
