@@ -110,7 +110,7 @@ module.exports = class DiffDetailsDataManager
             hunk.oldWords.push(word)
           else
             newCol += word.value.length
-            oldCol = word.value.length
+            oldCol += word.value.length
             hunk.newWords.push(word)
             hunk.oldWords.push(word)
 
