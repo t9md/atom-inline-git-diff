@@ -37,3 +37,6 @@ atom-text-editor::shadow .line {
   }
 }
 ```
+
+## Contributing
+I'd like to be conservative about adding features to this plugin. If you want to implement something, please create an issue first so we can discuss whether i'd accept a pull request.
