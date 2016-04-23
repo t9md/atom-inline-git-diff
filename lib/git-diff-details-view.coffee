@@ -15,13 +15,14 @@ module.exports = class AtomGitDiffDetailsView extends View
   initialize: (@editor) ->
     @editorView = atom.views.getView(@editor)
 
+    @diffDetailsDataManager = new DiffDetailsDataManager()
+
     @initializeHousekeeping()
     @preventFocusOut()
 
-    @diffDetailsDataManager = new DiffDetailsDataManager()
     @diffEditor = atom.workspace.buildTextEditor(lineNumberGutterVisible: false, scrollPastEnd: false)
-    diffEditorElement = atom.views.getView(@diffEditor)
-    @contents.html(diffEditorElement)
+    @contents.html(atom.views.getView(@diffEditor))
+
     @markers = []
 
     @showDiffDetails = false
@@ -45,7 +46,7 @@ module.exports = class AtomGitDiffDetailsView extends View
 
   notifyContentsModified: =>
     return if @editor.isDestroyed()
-    @diffDetailsDataManager?.invalidate(@repositoryForPath(@editor.getPath()),
+    @diffDetailsDataManager.invalidate(@repositoryForPath(@editor.getPath()),
                                        @editor.getPath(),
                                        @editor.getText())
     if @showDiffDetails
