@@ -1,6 +1,8 @@
 # git-diff-details package
 
-View git diffs directly in atom. Please note this package will show one diff at
+View git diffs directly in atom.
+
+Please note this package will show one diff at
 a time, as opposed to all diffs at once
 (see [#58](https://github.com/samu/git-diff-details/issues/58)).
 
