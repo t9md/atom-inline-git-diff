@@ -37,7 +37,7 @@ module.exports = class DiffDetailsDataManager
   updateLineDiffDetails: ->
     if !@lineDiffDetails? or @lineDiffDetailsInvalidated
       @prepareLineDiffDetails(@repo, @path, @text)
-      @prepareWordDiffs(@lineDiffDetails)
+      @prepareWordDiffs(@lineDiffDetails) if @lineDiffDetails
 
     @lineDiffDetailsInvalidated = false
     @lineDiffDetails
@@ -87,33 +87,32 @@ module.exports = class DiffDetailsDataManager
           hunk.oldString += line
 
   prepareWordDiffs: (lineDiffDetails) ->
-    if @lineDiffDetails
-      for hunk in lineDiffDetails
-        continue if hunk.kind isnt "m" or hunk.newLines.length != hunk.oldLines.length
-        hunk.newWords = []
-        hunk.oldWords = []
-        for i in [0...hunk.newLines.length] by 1
-          newCol = oldCol = 0
-          diff = JsDiff.diffWordsWithSpace(hunk.oldLines[i], hunk.newLines[i])
-          for word in diff
-            word.offsetRow = i
-            if word.added
-              word.changed = true
-              word.startCol = newCol
-              newCol += word.value.length
-              word.endCol = newCol
-              hunk.newWords.push(word)
-            else if word.removed
-              word.changed = true
-              word.startCol = oldCol
-              oldCol += word.value.length
-              word.endCol = oldCol
-              hunk.oldWords.push(word)
-            else
-              newCol += word.value.length
-              oldCol += word.value.length
-              hunk.newWords.push(word)
-              hunk.oldWords.push(word)
+    for hunk in lineDiffDetails
+      continue if hunk.kind isnt "m" or hunk.newLines.length != hunk.oldLines.length
+      hunk.newWords = []
+      hunk.oldWords = []
+      for i in [0...hunk.newLines.length] by 1
+        newCol = oldCol = 0
+        diff = JsDiff.diffWordsWithSpace(hunk.oldLines[i], hunk.newLines[i])
+        for word in diff
+          word.offsetRow = i
+          if word.added
+            word.changed = true
+            word.startCol = newCol
+            newCol += word.value.length
+            word.endCol = newCol
+            hunk.newWords.push(word)
+          else if word.removed
+            word.changed = true
+            word.startCol = oldCol
+            oldCol += word.value.length
+            word.endCol = oldCol
+            hunk.oldWords.push(word)
+          else
+            newCol += word.value.length
+            oldCol += word.value.length
+            hunk.newWords.push(word)
+            hunk.oldWords.push(word)
 
   invalidate: (@repo, @path, @text) ->
     @selectedHunkInvalidated = true
