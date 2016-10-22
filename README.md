@@ -1,9 +1,13 @@
 # git-diff-details package
 
-View git diffs directly in atom.
+View git diffs directly in atom. Please note this package will show one diff at
+a time, as opposed to all diffs at once
+(see [#58](https://github.com/samu/git-diff-details/issues/58)).
 
 ## Keybindings
-  * `alt-g alt-d` to toggle the diff view
+  * `alt-g alt-d` to toggle the diff view (You'll need to press these keys one
+    after another, and you'll need to place the cursor on a line that is marked
+    as a diff)
   * `escape` to close the diff view
   * `alt-u` for undo
   * `alt-c` for copy
