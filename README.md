@@ -25,7 +25,7 @@ You can choose whether the diff should be highlighted or not:
 You can style the diffs to your liking. Here's an example:
 
 ```less
-atom-text-editor::shadow .line {
+atom-text-editor .line {
   &.git-diff-details-new-highlighted {
     background-color: rgba(162, 232, 120, 0.4) !important;
   }
