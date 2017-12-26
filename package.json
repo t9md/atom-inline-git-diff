@@ -15,6 +15,9 @@
   "engines": {
     "atom": ">=1.7.0"
   },
+  "activationCommands": {
+    "atom-text-editor": ["git-diff-details:toggle-git-diff-details"]
+  },
   "configSchema": {
     "closeAfterCopy": {
       "type": "boolean",
@@ -39,8 +42,7 @@
   },
   "dependencies": {
     "atom-space-pen-views": "^2.0.3",
-    "diff": "^2.2.2",
-    "underscore-plus": "^1.6.6"
+    "diff": "^2.2.2"
   },
   "devDependencies": {
     "prettier": "^1.9.2"
