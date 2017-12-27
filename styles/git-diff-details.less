@@ -1,27 +1,20 @@
 @import "ui-variables";
 @import "syntax-variables";
 
-// Less mixins
-//--------------
-.git-diff-style(@diff-color) {
-  background-color: @diff-color !important;
-  color: black !important;
-  span {
-    color: black !important;
-  }
-}
-//---------------
+@line-background-color-added: fadeout(@syntax-color-added, 85%);
+@line-background-color-removed: fadeout(@syntax-color-removed, 75%);
 
 atom-text-editor {
   .line {
     &.git-diff-details-new-highlighted {
-      background-color: rgba(162, 232, 120, 0.1) !important;
+      background-color: @line-background-color-added !important;
     }
     &.git-diff-details-new-flat {
-      .git-diff-style(rgba(162, 232, 120, 0.7));
+      background-color: @line-background-color-added !important;
     }
   }
 
+  // Used for word-level-diff
   .highlight {
     &.git-diff-details-new-highlighted .region {
       background-color: rgba(162, 232, 120, 0.4);
@@ -47,12 +40,17 @@ atom-text-editor {
     }
     .line {
       &.git-diff-details-old-highlighted {
-        background-color: rgba(232, 120, 120, 0.1) !important;
+        background-color: @line-background-color-removed !important;
       }
       &.git-diff-details-old-flat {
-        .git-diff-style(rgba(232, 120, 120, 0.7));
+        background-color: @line-background-color-removed !important;
+        color: @syntax-text-color !important;
+        span {
+          color: @syntax-text-color !important;
+        }
       }
     }
+    // Used for word-level-diff
     .highlight {
       &.git-diff-details-old-highlighted .region {
         background-color: rgba(232, 120, 120, 0.4);
