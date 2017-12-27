@@ -1,51 +1,32 @@
 @import "ui-variables";
 @import "syntax-variables";
 
+// Less mixins
+//--------------
 .hide-invisibles () {
   .invisible-character {
     opacity: 0;
   }
 }
-.hide-cursor () {
-  visibility: none;
+
+.git-diff-style(@diff-color) {
+  background-color: @diff-color !important;
+  color: black !important;
+  span {
+    color: black !important;
+  }
+  .hide-invisibles();
 }
+//---------------
 
 atom-text-editor {
-  .git-diff-details-outer {
-    background-color: @base-background-color;
-    width: 100%;
-  }
-
-  .git-diff-details-main-panel {
-    position: relative;
-  }
-
-  .git-diff-style(@diff-color) {
-    background-color: @diff-color !important;
-    color: black !important;
-    span {
-      color: black !important;
-    }
-    .hide-invisibles();
-  }
-
   .line {
     &.git-diff-details-new-highlighted {
       background-color: rgba(162, 232, 120, 0.1) !important;
       .hide-invisibles();
     }
-
-    &.git-diff-details-old-highlighted {
-      background-color: rgba(232, 120, 120, 0.1) !important;
-      .hide-invisibles();
-    }
-
     &.git-diff-details-new-flat {
       .git-diff-style(rgba(162, 232, 120, 0.7));
-    }
-
-    &.git-diff-details-old-flat {
-      .git-diff-style(rgba(232, 120, 120, 0.7));
     }
   }
 
@@ -54,16 +35,38 @@ atom-text-editor {
       background-color: rgba(162, 232, 120, 0.4);
     }
 
-    &.git-diff-details-old-highlighted .region {
-      background-color: rgba(232, 120, 120, 0.4);
-    }
-
     &.git-diff-details-new-flat .region {
       background-color: rgba(162, 232, 120, 0.4);
     }
+  }
+}
 
-    &.git-diff-details-old-flat .region {
-      background-color: rgba(232, 120, 120, 0.4);
+// embeded git-diff details container
+.git-diff-details-outer {
+  // background-color: @base-background-color;
+  width: 100%;
+  .git-diff-details-main-panel {
+    position: relative;
+  }
+
+  atom-text-editor {
+    .line {
+      &.git-diff-details-old-highlighted {
+        background-color: rgba(232, 120, 120, 0.1) !important;
+        .hide-invisibles();
+      }
+      &.git-diff-details-old-flat {
+        .git-diff-style(rgba(232, 120, 120, 0.7));
+      }
+    }
+    .highlight {
+      &.git-diff-details-old-highlighted .region {
+        background-color: rgba(232, 120, 120, 0.4);
+      }
+
+      &.git-diff-details-old-flat .region {
+        background-color: rgba(232, 120, 120, 0.4);
+      }
     }
   }
 }
