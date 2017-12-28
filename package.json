@@ -35,6 +35,11 @@
       "type": "boolean",
       "default": true,
       "title": "Show word diffs"
+    },
+    "showAllChanges": {
+      "type": "boolean",
+      "default": true,
+      "title": "Show all changes instead of just showing change at cursor line"
     }
   },
   "dependencies": {
