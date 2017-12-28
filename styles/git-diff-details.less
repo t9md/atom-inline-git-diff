@@ -1,9 +1,10 @@
 @import "ui-variables";
 @import "syntax-variables";
 
-@line-background-color-added: fadeout(@syntax-color-added, 75%);
-@line-background-color-removed: fadeout(@syntax-color-removed, 75%);
-@line-background-color-modified: fadeout(@syntax-color-modified, 75%);
+@line-background-color-added: fadeout(@syntax-color-added, 80%);
+@line-background-color-removed: fadeout(@syntax-color-removed, 80%);
+@word-diff-color-added: rgba(232, 120, 120, 0.4);
+@word-diff-color-removed: rgba(232, 120, 120, 0.4);
 
 // Less mixins
 //-------------------
@@ -32,7 +33,7 @@ atom-text-editor {
   // Used for word-level-diff
   .highlight {
     &.git-diff-details-added .region {
-      background-color: rgba(162, 232, 120, 0.4);
+      background-color: @word-diff-color-added;
     }
   }
 }
@@ -46,21 +47,16 @@ atom-text-editor {
   }
 
   atom-text-editor {
+    background-color: @line-background-color-removed !important;
     .cursor {
       visibility: hidden;
     }
     &.use-flat-color-for-removed-lines .line {
       .plain-text-color();
     }
-    .line {
-      &.git-diff-details-removed {
-        background-color: @line-background-color-removed !important;
-      }
-    }
-    // Used for word-level-diff
     .highlight {
-      &.git-diff-details-removed {
-        background-color: rgba(232, 120, 120, 0.4);
+      &.git-diff-details-removed .region {
+        background-color: @word-diff-color-removed;
       }
     }
   }
