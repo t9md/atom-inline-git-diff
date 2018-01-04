@@ -51,6 +51,9 @@ atom-text-editor {
     .cursor {
       visibility: hidden;
     }
+    .lines .line.cursor-line {
+      background-color: transparent; // disable cursor-line highlight
+    }
     &.use-flat-color-for-removed-lines .line {
       .plain-text-color();
     }
