@@ -1,0 +1,4 @@
+'atom-text-editor':
+  'alt-g alt-d': 'inline-git-diff:toggle'
+  'alt-r': 'inline-git-diff:revert'
+  'alt-c': 'inline-git-diff:copy-removed-text'

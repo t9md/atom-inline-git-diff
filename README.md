@@ -1,4 +1,22 @@
-# git-diff-details package
+## note by t9md START
+
+Inline git diffs in editor.
+
+![](https://raw.githubusercontent.com/t9md/t9md/af71d8d6613f61b7f0fe3da9f7a89b5c91c3510c/img/atom-inline-git-diff.gif)
+
+## difference from original `git-diff-details` package
+
+- No config options
+- Cleaner inner-line diff(word diff)
+- Show all diffs in editor, always instead of just showing diff at cursor
+- Show added diff as long as modified, deleted diff
+- Rename `undo` command to `revert`
+- Can revert for added diff
+- Activate on `toggle`
+
+## note by t9md END
+
+# inline-git-diff package
 
 View git diffs directly in atom.
 
@@ -26,19 +44,19 @@ You can style the diffs to your liking. Here's an example:
 
 ```less
 atom-text-editor .line {
-  &.git-diff-details-new-highlighted {
+  &.inline-git-diff-new-highlighted {
     background-color: rgba(162, 232, 120, 0.4) !important;
   }
 
-  &.git-diff-details-old-highlighted {
+  &.inline-git-diff-old-highlighted {
     background-color: rgba(232, 120, 120, 0.4) !important;
   }
 
-  &.git-diff-details-new-flat {
+  &.inline-git-diff-new-flat {
     background-color: rgba(162, 232, 120, 0.7) !important;
   }
 
-  &.git-diff-details-old-flat {
+  &.inline-git-diff-old-flat {
     background-color: rgba(232, 120, 120, 0.7) !important;
   }
 }
