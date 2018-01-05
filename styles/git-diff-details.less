@@ -20,29 +20,29 @@
 //-------------------
 atom-text-editor {
   &.use-flat-color-for-added-lines .line {
-    &.git-diff-details-added {
+    &.inline-git-diff-added {
       .plain-text-color();
     }
   }
   .line {
-    &.git-diff-details-added {
+    &.inline-git-diff-added {
       background-color: @line-background-color-added !important;
     }
   }
 
   // Used for word-level-diff
   .highlight {
-    &.git-diff-details-added .region {
+    &.inline-git-diff-added .region {
       background-color: @word-diff-color-added;
     }
   }
 }
 
 // embeded git-diff details container
-.git-diff-details-outer {
+.inline-git-diff-outer {
   background-color: @base-background-color;
   width: 100%;
-  .git-diff-details-main-panel {
+  .inline-git-diff-main-panel {
     position: relative;
   }
 
@@ -58,7 +58,7 @@ atom-text-editor {
       .plain-text-color();
     }
     .highlight {
-      &.git-diff-details-removed .region {
+      &.inline-git-diff-removed .region {
         background-color: @word-diff-color-removed;
       }
     }
