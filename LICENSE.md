@@ -1,3 +1,5 @@
+Copyright (c) 2018 t9md (Added at 2018.1.5 since I(t9md) forked, changed significantly)
+
 Copyright (c) 2014 Samuel Mueller
 
 Permission is hereby granted, free of charge, to any person obtaining
