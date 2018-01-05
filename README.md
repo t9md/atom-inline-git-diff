@@ -1,10 +1,17 @@
-## note by t9md START
+## How this package is built
+
+- This package is fork of great [git-diff-details](https://github.com/samu/git-diff-details/) package by @samu.
+- This package is as a result of experiment to change original git-diff-details how I want.
+- Why I didn't send PR is changes are big, incompatible, and I still not sure how this fork project goes(still actively experimenting).
+- See: https://github.com/samu/git-diff-details/issues/75
+
+## What's this?
 
 Inline git diffs in editor.
 
 ![](https://raw.githubusercontent.com/t9md/t9md/af71d8d6613f61b7f0fe3da9f7a89b5c91c3510c/img/atom-inline-git-diff.gif)
 
-## difference from original `git-diff-details` package
+## differences from original `git-diff-details` package
 
 - No config options
 - Cleaner inner-line diff(word diff)
@@ -14,53 +21,30 @@ Inline git diffs in editor.
 - Can revert for added diff
 - Activate on `toggle`
 
-## note by t9md END
+## Commands
 
-# inline-git-diff package
+- `inline-git-diff:toggle`: Enable/disable inline diff.
+- `inline-git-diff:revert`: Revert diff at cursor.
+- `inline-git-diff:copy-removed-text`: Copy removed diff to clipboard.
 
-View git diffs directly in atom.
+## How to use
 
-Please note this package will show one diff at
-a time, as opposed to all diffs at once
-(see [#58](https://github.com/samu/git-diff-details/issues/58)).
+1. Enable inline diff by executing `inline-git-diff:toggle`.
+2. Review diff, revert by `inline-git-diff:revert`
+3. Disable inline diff by executing `inline-git-diff:toggle` again.
 
-## Keybindings
-  * `alt-g alt-d` to toggle the diff view (You'll need to press these keys one
-    after another, and you'll need to place the cursor on a line that is marked
-    as a diff)
-  * `escape` to close the diff view
-  * `alt-u` for undo
-  * `alt-c` for copy
+## keymap
 
-## Syntax highlighting
-You can choose whether the diff should be highlighted or not:
+For default keymap see [this file](https://github.com/t9md/atom-inline-git-diff/blob/master/keymaps/inline-git-diff.cson).
 
-![git-diff-details](https://github.com/samu/git-diff-details/blob/master/flat.png?raw=true)
 
-![git-diff-details](https://github.com/samu/git-diff-details/blob/master/highlighted.png?raw=true)
+### Here is my keymap
 
-## Styling
-You can style the diffs to your liking. Here's an example:
+```coffeescript
+'atom-text-editor.vim-mode-plus.normal-mode':
+  'g d': 'inline-git-diff:toggle'
 
-```less
-atom-text-editor .line {
-  &.inline-git-diff-new-highlighted {
-    background-color: rgba(162, 232, 120, 0.4) !important;
-  }
-
-  &.inline-git-diff-old-highlighted {
-    background-color: rgba(232, 120, 120, 0.4) !important;
-  }
-
-  &.inline-git-diff-new-flat {
-    background-color: rgba(162, 232, 120, 0.7) !important;
-  }
-
-  &.inline-git-diff-old-flat {
-    background-color: rgba(232, 120, 120, 0.7) !important;
-  }
-}
+'atom-text-editor.vim-mode-plus.normal-mode.has-inline-git-diff':
+  'tab': 'git-diff:move-to-next-diff'
+  'shift-tab': 'git-diff:move-to-previous-diff'
 ```
-
-## Contributing
-I'd like to be conservative about adding features to this plugin. If you want to implement something, please create an issue first so we can discuss whether i'd accept a pull request.
