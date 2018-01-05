@@ -1,9 +1,18 @@
 @import "syntax-variables";
 
 @added-line: fadeout(@syntax-color-added, 80%);
-@removed-line: fadeout(@syntax-color-removed, 90%);
 @added-inner: fadeout(@syntax-color-added, 70%);
+
+@removed-line: fadeout(@syntax-color-removed, 90%);
 @removed-inner: fadeout(@syntax-color-removed, 70%);
+
+.underline(@color) {
+  border-color: @color;
+  box-sizing: border-box;
+  border-width: 0px;
+  border-bottom-width: 2px;
+  border-style: solid;
+}
 
 atom-text-editor {
   .line.inline-git-diff-added {
@@ -12,6 +21,7 @@ atom-text-editor {
 
   .highlight.inline-git-diff-added-inner .region {
     background-color: @added-inner;
+    .underline(@syntax-color-added);
   }
 }
 
@@ -22,6 +32,7 @@ atom-text-editor.inline-git-diff-removed {
 
   .highlight.inline-git-diff-removed-inner .region {
     background-color: @removed-inner;
+    .underline(@syntax-color-removed);
   }
 
   .cursor {
@@ -30,5 +41,4 @@ atom-text-editor.inline-git-diff-removed {
   .lines .line.cursor-line {
     background-color: transparent; // disable cursor-line highlight
   }
-
 }
