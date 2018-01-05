@@ -1,0 +1,34 @@
+@import "syntax-variables";
+
+@added-line: fadeout(@syntax-color-added, 80%);
+@removed-line: fadeout(@syntax-color-removed, 90%);
+@added-inner: fadeout(@syntax-color-added, 70%);
+@removed-inner: fadeout(@syntax-color-removed, 70%);
+
+atom-text-editor {
+  .line.inline-git-diff-added {
+    background-color: @added-line !important;
+  }
+
+  .highlight.inline-git-diff-added-inner .region {
+    background-color: @added-inner;
+  }
+}
+
+// Editor embeded in normal editor which shows removed lines
+// Mounted as block decoration
+atom-text-editor.inline-git-diff-removed {
+  background-color: @removed-line !important;
+
+  .highlight.inline-git-diff-removed-inner .region {
+    background-color: @removed-inner;
+  }
+
+  .cursor {
+    visibility: hidden;
+  }
+  .lines .line.cursor-line {
+    background-color: transparent; // disable cursor-line highlight
+  }
+
+}

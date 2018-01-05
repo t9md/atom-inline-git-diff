@@ -12,12 +12,6 @@
   "activationCommands": {
     "atom-text-editor": ["inline-git-diff:toggle"]
   },
-  "configSchema": {
-    "useFlatColorForRemovedLines": {
-      "type": "boolean",
-      "default": false
-    }
-  },
   "devDependencies": {
     "prettier": "^1.9.2"
   }
