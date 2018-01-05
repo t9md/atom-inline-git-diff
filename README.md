@@ -1,8 +1,20 @@
-### note by t9md START
+## note by t9md START
 
-Experimenting several ideas.
+Inline git diffs in editor.
 
-### note by t9md END
+![](https://raw.githubusercontent.com/t9md/t9md/af71d8d6613f61b7f0fe3da9f7a89b5c91c3510c/img/atom-inline-git-diff.gif)
+
+## difference from original `git-diff-details` package
+
+- No config options
+- Cleaner inner-line diff(word diff)
+- Show all diffs in editor, always instead of just showing diff at cursor
+- Show added diff as long as modified, deleted diff
+- Rename `undo` command to `revert`
+- Can revert for added diff
+- Activate on `toggle`
+
+## note by t9md END
 
 # inline-git-diff package
 
