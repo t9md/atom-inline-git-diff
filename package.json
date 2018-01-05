@@ -1,32 +1,17 @@
 {
-  "name": "git-diff-details",
+  "name": "inline-git-diff",
   "main": "./lib/main",
   "version": "1.4.0",
-  "description": "View git diffs directly in atom.",
-  "keywords": [
-    "git",
-    "diff",
-    "details",
-    "inline",
-    "undo"
-  ],
-  "repository": "https://github.com/samu/git-diff-details",
+  "description": "Inline git diffs in editor.",
+  "keywords": ["git", "diff", "inline"],
+  "repository": "https://github.com/t9md/inline-git-diff",
   "license": "MIT",
   "engines": {
     "atom": ">=1.7.0"
   },
   "activationCommands": {
-    "atom-text-editor": [
-      "git-diff-details:toggle-git-diff-details"
-    ]
+    "atom-text-editor": ["inline-git-diff:toggle"]
   },
-  "configSchema": {
-    "useFlatColorForRemovedLines": {
-      "type": "boolean",
-      "default": false
-    }
-  },
-  "dependencies": {},
   "devDependencies": {
     "prettier": "^1.9.2"
   }

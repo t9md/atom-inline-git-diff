@@ -4,7 +4,7 @@ Experimenting several ideas.
 
 ### note by t9md END
 
-# git-diff-details package
+# inline-git-diff package
 
 View git diffs directly in atom.
 
@@ -32,19 +32,19 @@ You can style the diffs to your liking. Here's an example:
 
 ```less
 atom-text-editor .line {
-  &.git-diff-details-new-highlighted {
+  &.inline-git-diff-new-highlighted {
     background-color: rgba(162, 232, 120, 0.4) !important;
   }
 
-  &.git-diff-details-old-highlighted {
+  &.inline-git-diff-old-highlighted {
     background-color: rgba(232, 120, 120, 0.4) !important;
   }
 
-  &.git-diff-details-new-flat {
+  &.inline-git-diff-new-flat {
     background-color: rgba(162, 232, 120, 0.7) !important;
   }
 
-  &.git-diff-details-old-flat {
+  &.inline-git-diff-old-flat {
     background-color: rgba(232, 120, 120, 0.7) !important;
   }
 }
