@@ -62,13 +62,8 @@ atom-text-editor.inline-git-diff-removed {
 }
 //------------------
 
-.define-flash-animation(flash-copy, @syntax-color-removed)
-.define-flash-animation(flash-revert, @syntax-color-removed)
+.define-flash-animation(flash-copy, @syntax-color-removed);
 
-atom-text-editor .line.inline-git-diff-flash-copy {
+atom-text-editor .inline-git-diff-flash-copy .region {
   .flash(flash-copy, 0.8s);
-}
-
-atom-text-editor .line.inline-git-diff-flash-revert {
-  .flash(flash-revert, 0.8s);
 }
