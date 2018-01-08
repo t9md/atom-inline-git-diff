@@ -55,3 +55,4 @@ My workflow is
 
 1. `g d` to see inline diff.
 2. `tab` to review changes I made, after review hit `tab` to move to next diff.
+3. `g r` to `revert`, `g c` to `copy-removed-text`
