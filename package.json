@@ -1,7 +1,7 @@
 {
   "name": "inline-git-diff",
   "main": "./lib/main",
-  "version": "1.4.0",
+  "version": "0.0.0",
   "description": "Inline git diffs in editor.",
   "keywords": ["git", "diff", "inline"],
   "repository": "https://github.com/t9md/atom-inline-git-diff",

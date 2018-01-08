@@ -1,27 +1,32 @@
 ## What's this?
 
-Inline git diffs in editor.
+Inline git diffs in editor. Can revert/copy specific diff.
 
-![](https://raw.githubusercontent.com/t9md/t9md/af71d8d6613f61b7f0fe3da9f7a89b5c91c3510c/img/atom-inline-git-diff.gif)
+![](https://raw.githubusercontent.com/t9md/t9md/5dae170b2f0d78fa922b8a6d90149e45bfcac5c4/img/atom-inline-git-diff.gif)
 
-## This project is fork of [git-diff-details](https://github.com/samu/git-diff-details/) pkg
+## This project is fork of [git-diff-details][1] pkg
 
-- This package is fork of great [git-diff-details](https://github.com/samu/git-diff-details/) package by [@samu](https://github.com/samu).
-- This package is a result of experiment to make original git-diff-details how I want.
-- I asked to @samu about [releasing this fork project as distinct package](https://github.com/samu/git-diff-details/issues/75).
-- This project is greatly owning original @samu's work. Thanks for great successor and his kindness for allowing me to release this pkg.
+- This package is fork of great [git-diff-details][1] package by [@samu][samu].
+- This package is a result of [experiment][2] to make original git-diff-details how I want.
+- I asked to @samu about [releasing this fork project as distinct package][3].
+- This project is greatly owning to original @samu's work. Thanks for great successor and his kindness for allowing me to release this pkg.
+
+[1]: https://github.com/samu/git-diff-details/
+[2]: https://github.com/t9md/git-diff-details
+[3]: https://github.com/samu/git-diff-details/issues/75
+[samu]: https://github.com/samu
 
 ## Commands
 
-- `inline-git-diff:toggle`: Enable/disable inline diff.
-- `inline-git-diff:revert`: Revert diff at cursor.
-- `inline-git-diff:copy-removed-text`: Copy removed diff to clipboard.
+- `inline-git-diff:toggle`: Enable/disable inline diff
+- `inline-git-diff:revert`: Revert diff at cursor
+- `inline-git-diff:copy-removed-text`: Copy removed diff to clipboard
 
 ## How to use
 
-1. Enable inline diff by executing `inline-git-diff:toggle`.
-2. Review diff, revert by `inline-git-diff:revert`
-3. Disable inline diff by executing `inline-git-diff:toggle` again.
+1. Open editor then execute `inline-git-diff:toggle`.(handled per editor basis)
+2. You can `revert`(`inline-git-diff:revert`) or `copy`(`inline-git-diff:copy-removed-text`)
+3. Disable by executing `inline-git-diff:toggle` again.
 
 ## keymap
 
