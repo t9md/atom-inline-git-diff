@@ -15,7 +15,7 @@
 }
 
 atom-text-editor {
-  .line.inline-git-diff-added {
+  .inline-git-diff-added .region {
     background-color: @added-line !important;
   }
 
@@ -41,4 +41,34 @@ atom-text-editor.inline-git-diff-removed {
   .lines .line.cursor-line {
     background-color: transparent; // disable cursor-line highlight
   }
+}
+
+// Sass Mixins
+//------------------
+.define-flash-animation (@animation-name, @color) {
+  @keyframes @animation-name {
+    from {
+      background-color: @color;
+    }
+    to {
+      background-color: transparent;
+    }
+  }
+}
+.flash (@animation-name; @duration) {
+  animation-name: @animation-name;
+  animation-duration: @duration;
+  animation-iteration-count: 1;
+}
+//------------------
+
+.define-flash-animation(flash-copy, @syntax-color-removed)
+.define-flash-animation(flash-revert, @syntax-color-removed)
+
+atom-text-editor .line.inline-git-diff-flash-copy {
+  .flash(flash-copy, 0.8s);
+}
+
+atom-text-editor .line.inline-git-diff-flash-revert {
+  .flash(flash-revert, 0.8s);
 }
