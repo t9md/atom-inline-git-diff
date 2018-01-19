@@ -1,3 +1,7 @@
+## 2.1.0
+- Disallow scroll on editorInEditor
+- Tune removed diff color
+
 ## 2.0.0 First release
 
 - This is first public release
