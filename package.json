@@ -19,6 +19,13 @@
       }
     }
   },
+  "providedServices": {
+    "inline-git-diff": {
+      "versions": {
+        "1.0.0": "provideInlineGitDiff"
+      }
+    }
+  },
   "configSchema": {
     "showInStatusBar": {
       "order": 0,
