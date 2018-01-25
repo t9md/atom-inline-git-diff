@@ -3,22 +3,32 @@
   "main": "./lib/main",
   "version": "2.1.0",
   "description": "Inline git diffs in editor.",
-  "keywords": [
-    "git",
-    "diff",
-    "inline"
-  ],
+  "keywords": ["git", "diff", "inline"],
   "repository": "https://github.com/t9md/atom-inline-git-diff",
   "license": "MIT",
   "engines": {
     "atom": ">=1.7.0"
   },
-  "activationCommands": {
-    "atom-text-editor": [
-      "inline-git-diff:toggle"
-    ]
-  },
   "devDependencies": {
     "prettier": "^1.9.2"
+  },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
+  "configSchema": {
+    "showInStatusBar": {
+      "order": 0,
+      "type": "boolean",
+      "default": true
+    },
+    "statusBarIconOnly": {
+      "order": 1,
+      "type": "boolean",
+      "default": false
+    }
   }
 }
