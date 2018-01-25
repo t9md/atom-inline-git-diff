@@ -20,5 +20,12 @@
   },
   "devDependencies": {
     "prettier": "^1.9.2"
+  },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
   }
 }

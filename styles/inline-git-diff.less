@@ -1,4 +1,4 @@
-@import "syntax-variables";
+@import 'syntax-variables';
 
 @added-line: fadeout(@syntax-color-added, 80%);
 @added-inner: fadeout(@syntax-color-added, 70%);
@@ -68,4 +68,11 @@ atom-text-editor.inline-git-diff-removed {
 
 atom-text-editor .inline-git-diff-flash-copy {
   .flash(flash-copy, 0.8s);
+}
+
+#inline-git-diff-status {
+  padding-top: 0.1em;
+  .enabled {
+    color: @syntax-color-added;
+  }
 }
