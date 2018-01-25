@@ -70,9 +70,11 @@ atom-text-editor .inline-git-diff-flash-copy {
   .flash(flash-copy, 0.8s);
 }
 
-#inline-git-diff-status {
-  padding-top: 0.1em;
+.inline-git-diff-status {
+  div {
+    padding-top: 0.1em;
+  }
   .enabled {
-    color: @syntax-color-added;
+    color: @text-color-success;
   }
 }
