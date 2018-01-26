@@ -1,3 +1,11 @@
+## 3.0.0
+- Remove `activationCommands`
+- Add status-bar icon and text.
+  - Indicate enabled status by green color.
+  - Clicking icon toggle inline-git-diff on active editor.
+  - Can choose style from `icon + text`(default), `icon` or `text`
+- Provides service `provideInlineGitDiff` for integration with `narrow:git-diff-all`
+
 ## 2.1.0
 - Disallow scroll on editorInEditor
 - Tune removed diff color
