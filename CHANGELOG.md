@@ -1,3 +1,6 @@
+## 2.2.3
+- Improve: Tweak icon click area more relaxed. Center position within container element.
+
 ## 2.2.2
 - Minor Fix: Don't show statusbar icon when Atom started up without active editor.
 
