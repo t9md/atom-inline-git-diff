@@ -32,10 +32,15 @@
       "type": "boolean",
       "default": true
     },
-    "statusBarIconOnly": {
+    "statusBarStyle": {
       "order": 1,
-      "type": "boolean",
-      "default": false
+      "type": "string",
+      "default": "icon + text",
+      "enum": [
+        "icon + text",
+        "icon",
+        "text"
+      ]
     }
   }
 }
