@@ -41,6 +41,8 @@ For default keymap, see [this file](https://github.com/t9md/atom-inline-git-diff
 'atom-workspace:not(.has-narrow) atom-text-editor.vim-mode-plus.normal-mode.has-inline-git-diff':
   'tab': 'git-diff:move-to-next-diff'
   'shift-tab': 'git-diff:move-to-previous-diff'
+
+'atom-text-editor.vim-mode-plus.normal-mode.has-inline-git-diff':
   'g r': 'inline-git-diff:revert'
   'g c': 'inline-git-diff:copy-removed-text'
 ```
