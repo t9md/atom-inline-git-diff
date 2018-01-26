@@ -1,4 +1,7 @@
-## 3.0.0
+## 2.2.1
+- Just fix CHANGELOG's version number mistake.
+
+## 2.2.0
 - Remove `activationCommands`
 - Add status-bar icon and text.
   - Indicate enabled status by green color.
