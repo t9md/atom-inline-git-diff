@@ -1,3 +1,6 @@
+## 2.2.2
+- Minor Fix: Don't show statusbar icon when Atom started up without active editor.
+
 ## 2.2.1
 - Just fix CHANGELOG's version number mistake.
 
