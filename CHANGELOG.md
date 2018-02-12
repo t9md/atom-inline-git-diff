@@ -1,3 +1,8 @@
+## 2.3.0
+- Improve: `revert` and `copy-removed-text` commands works without having `inline-git-diff` enabled. #5
+  - In older version, revert/copy succeeded but user see exception, but no longer.
+- Internal: Apply standard linter/formatting style
+
 ## 2.2.3
 - Improve: Tweak icon click area more relaxed. Center position within container element.
 
