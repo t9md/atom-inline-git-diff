@@ -13,6 +13,9 @@
   "engines": {
     "atom": ">=1.7.0"
   },
+  "dependencies": {
+    "diff": "^2.2.2"
+  },
   "devDependencies": {
     "prettier": "^1.10.2",
     "standard": "^10.0.3"
