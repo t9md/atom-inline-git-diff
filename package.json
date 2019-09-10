@@ -71,6 +71,16 @@
         "icon",
         "text"
       ]
+    },
+    "maxCommitsToShowInGitHistory": {
+      "order": 2,
+      "type": "integer",
+      "default": 100
+    },
+    "preselectLastCommitFromCurrentGitUser": {
+      "order": 3,
+      "type": "boolean",
+      "default": true
     }
   }
 }
