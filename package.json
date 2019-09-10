@@ -81,6 +81,31 @@
       "order": 3,
       "type": "boolean",
       "default": true
+    },
+    "diffStyleForTextFiles": {
+      "order": 4,
+      "type": "string",
+      "default": "word diff",
+      "enum": [
+        "line diff",
+        "inner line diff",
+        "word diff"
+      ]
+    },
+    "diffStyleForSourceFiles": {
+      "order": 5,
+      "type": "string",
+      "default": "inner line diff",
+      "enum": [
+        "line diff",
+        "inner line diff",
+        "word diff"
+      ]
+    },
+    "textFileGrammarList": {
+      "order": 6,
+      "type": "string",
+      "default": "text.*, source.asciidoc*, source.gfm"
     }
   }
 }
