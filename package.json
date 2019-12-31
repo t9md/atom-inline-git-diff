@@ -14,8 +14,9 @@
     "atom": ">=1.7.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.0.3",
     "diff": "^2.2.2",
-    "fs-extra": ">=8.0.0" 
+    "fs-extra": ">=8.0.0"
   },
   "devDependencies": {
     "prettier": "^1.10.2",
@@ -70,6 +71,52 @@
         "icon",
         "text"
       ]
+    },
+    "diffAlgorithm": {
+      "order": 2,
+      "type": "string",
+      "default": "histogram",
+      "enum": [ "myers", "minimal", "patience", "histogram" ]
+    },
+    "maxCommitsToShowInGitHistory": {
+      "order": 3,
+      "type": "integer",
+      "default": 100,
+      "description": "max number of commits to show in the git history prompt (where you can choose the commit against which to compare the current buffer text)"
+    },
+    "preselectLastCommitFromCurrentGitUser": {
+      "order": 4,
+      "type": "boolean",
+      "default": false,
+      "description": "preselect last commit from the current git user (instead of the last commit) in the git history prompt"
+    },
+    "diffStyleForTextFiles": {
+      "order": 5,
+      "type": "string",
+      "default": "word diff",
+      "enum": [
+        "line diff",
+        "inner line diff",
+        "word diff"
+      ],
+      "description": "Diff view style for text files (html, xml, latex, markdown, etc.). Choices are:<li><b>line diff</b>: no highlighting within diffs;</li><li><b>inner line diff</b>: if lines have not been added but just modified, highlight the text range from the first to the last modification within the diff;</li><li><b>word diff</b>: highlight the words that have been modified within each diff.</li><b>inner line diff</b> should be better for source code files, while <b>word diff</b> is more suitable for text files (documents)"
+    },
+    "diffStyleForSourceFiles": {
+      "order": 6,
+      "type": "string",
+      "default": "inner line diff",
+      "enum": [
+        "line diff",
+        "inner line diff",
+        "word diff"
+      ],
+      "description": "Diff view style for source code files (same choices as above)"
+    },
+    "textFileGrammarList": {
+      "order": 7,
+      "type": "string",
+      "default": "text.*, source.asciidoc*, source.gfm",
+      "description": "comma-separated list of grammar scope names, used by inline-git-diff to distinguish text files (documents) from source code files and apply different diff view styles accordingly (see the options above). You can use '*' as wildcard.<br>Default values should cover any plain text, asciidoc, markdown, html, latex, reStructuredText and xml files.<br>More info on Atom's grammar scope names at https://atom.io/packages/file-types"
     }
   }
 }
