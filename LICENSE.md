@@ -1,3 +1,6 @@
+Copyright (c) 2019-2020 Alberto Pianon - word diff for text files, git 
+diff from any previous commit in file history
+
 Copyright (c) 2018 t9md (Added at 2018.1.5 since I(t9md) forked, changed significantly)
 
 Copyright (c) 2014 Samuel Mueller
