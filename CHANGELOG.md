@@ -1,3 +1,6 @@
+## 2.4.0
+- Improve: Enable soft-wrap in inline diff editor when hosting(original) editor is soft-wrapped. #11 by @alpianon
+
 ## 2.3.0
 - Improve: `revert` and `copy-removed-text` commands works without having `inline-git-diff` enabled. #5
   - In older version, revert/copy succeeded but user see exception, but no longer.
