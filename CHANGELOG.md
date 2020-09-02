@@ -1,3 +1,11 @@
+## 3.0.0
+
+- Enhancements by @alpianon:
+  - word diff for text files, inner line diff for source code files (configurable)
+  - user can choose any previous commit from edited file's git history to calculate the diff against (by default, last available commit is pre-seleted, but one may choose to pre-select last commit by the current git user)
+  - the command `git diff` is used to calculate diffs
+  - user can choose which git diff algorithm to use to calculate the diff
+
 ## 2.4.0
 - Improve: Enable soft-wrap in inline diff editor when hosting(original) editor is soft-wrapped. #11 by @alpianon
 
